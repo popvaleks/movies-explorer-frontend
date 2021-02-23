@@ -1,0 +1,122 @@
+.about__wrapper {
+  margin: 0 70px;
+  padding: 102px 0;
+  background-color: #202020;
+}
+
+.about__tittle {
+  margin: 0 auto 70px 0;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #DADADA;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 27px;
+  /* identical to box height */
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.about__content {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.about__container {
+  max-width: 550px;
+  margin-right: 24px;
+}
+
+.about__container:last-child {
+  max-width: 550px;
+  margin-right: 0;
+}
+
+
+.about__container-title {
+  margin: 0 auto 20px 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+}
+
+.about__container-subtitle {
+  margin: 0 auto 110px 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+  color: #FFFFFF;
+}
+
+.about__progress {
+  display: flex;
+  justify-content: space-between;
+}
+
+.about__progress-back {
+  max-width: 228px;
+  padding: 9px 0;
+  background-color: #3DDC84;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  margin: 0 0 14px;
+  flex-grow: 1;
+}
+
+.about__progress-lines {
+  margin: 0 auto;
+  padding: 9px 0;
+}
+
+.about__progress_back {
+  max-width: 228px;
+  background-color: #3DDC84;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  flex-grow: 1;
+}
+
+.about__progress_front {
+  max-width: 912px;
+  background-color: #303030;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  flex-grow: 3;
+}
+
+.about__progress_subtitle {
+  background-color: #202020;
+  font-family: Suisse Intl;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height, or 121% */
+  text-align: center;
+  color: #8B8B8B;
+  padding-bottom: 0;
+}
