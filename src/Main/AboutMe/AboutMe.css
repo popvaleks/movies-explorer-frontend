@@ -104,3 +104,27 @@
 .about-me__navbar-navbar-item:last-child {
   margin-right: 0;
 }
+
+@media screen and (max-width: 810px) {
+  .about-me__wrapper {
+    margin: 0;
+    padding: 90px 50px;
+  }
+  .about-me__block{
+    max-width: 364px;
+  }
+  .about-me__subtitle  {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+  .about-me__job {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+  .about-me__subtitle-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

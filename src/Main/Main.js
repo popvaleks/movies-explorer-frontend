@@ -10,16 +10,18 @@ import Portfolio from './Portfolio/Portfolio';
 
 function Main() {
   return (
-    <div className="main__about-wrapper">
-      <Promo>
-      </Promo>
-      <NavTab>
-      </NavTab>
+    <div className="main-about__wrapper">
+      <div className="main-about__promo">
+        <Promo>
+        </Promo>
+        <NavTab>
+        </NavTab>
+      </div>
       <AboutProject></AboutProject>
       <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
-    </div>
+    </div >
   );
 }
 

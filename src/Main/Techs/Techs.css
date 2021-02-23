@@ -1,11 +1,17 @@
 .techs__wrapper {
-  margin: 0;
+  margin: 0 auto;
   padding: 100px 0;
   background-color: #272727;
 }
 
+.tech__content {
+  max-width: 1280px;
+  padding: 0 40px
+}
+
 .techs__tittle {
-  margin: 0 70px 70px;
+  max-width: 1140px;
+  margin: 0 auto 70px;
   padding-bottom: 23px;
   border-bottom: 1px solid #DADADA;
   font-family: Inter;
@@ -55,14 +61,23 @@
   align-items: space-between;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding: 0 20px
+  gap: 10px;
+  padding: 0 20px;
+}
+
+.techs__navbar-navbar-item {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 90px;
+  height: 60px;
 }
 
 
 .techs__button {
   width: 90px;
   height: 60px;
+  margin: 0 auto;
+  padding: 0;
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
@@ -74,5 +89,15 @@
   color: #FFFFFF;
   background-color: #303030;
   border: none;
-  flex: 1 1 calc((100% / 3) - 2rem);
+}
+
+@media screen and (max-width: 810px) {
+  .techs__navbar-navbar-item {
+    max-width: 84px;
+    max-height: 90px;
+  }
+  .techs__button {
+    width: 84px;
+    height: 57px;
+  }
 }

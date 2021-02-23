@@ -1,10 +1,11 @@
-.about__wrapper {
-  margin: 0 70px;
-  padding: 102px 0;
+.about-project__wrapper {
+  margin: 0 auto;
+  padding: 102px 70px;
   background-color: #202020;
+  max-width: 1280px;
 }
 
-.about__tittle {
+.about-project__tittle {
   margin: 0 auto 70px 0;
   padding-bottom: 23px;
   border-bottom: 1px solid #DADADA;
@@ -18,25 +19,24 @@
   color: #FFFFFF;
 }
 
-.about__content {
+.about-project__content {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
 }
 
-.about__container {
+.about-project__container {
   max-width: 550px;
   margin-right: 24px;
 }
 
-.about__container:last-child {
+.about-project__container:last-child {
   max-width: 550px;
   margin-right: 0;
 }
 
-
-.about__container-title {
-  margin: 0 auto 20px 0;
+.about-project__container-title {
+  margin: 0 auto 26px 0;
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
@@ -46,7 +46,7 @@
   color: #FFFFFF;
 }
 
-.about__container-subtitle {
+.about-project__container-subtitle {
   margin: 0 auto 110px 0;
   font-family: Inter;
   font-style: normal;
@@ -55,14 +55,15 @@
   line-height: 20px;
   /* or 143% */
   color: #FFFFFF;
+  max-width: 450px;
 }
 
-.about__progress {
+.about-project__progress {
   display: flex;
   justify-content: space-between;
 }
 
-.about__progress-back {
+.about-project__progress-back {
   max-width: 228px;
   padding: 9px 0;
   background-color: #3DDC84;
@@ -77,12 +78,12 @@
   flex-grow: 1;
 }
 
-.about__progress-lines {
+.about-project__progress-lines {
   margin: 0 auto;
   padding: 9px 0;
 }
 
-.about__progress_back {
+.about-project__progress_back {
   max-width: 228px;
   background-color: #3DDC84;
   font-family: Inter;
@@ -95,7 +96,7 @@
   flex-grow: 1;
 }
 
-.about__progress_front {
+.about-project__progress_front {
   max-width: 912px;
   background-color: #303030;
   font-family: Inter;
@@ -108,7 +109,7 @@
   flex-grow: 3;
 }
 
-.about__progress_subtitle {
+.about-project__progress_subtitle {
   background-color: #202020;
   font-family: Suisse Intl;
   font-style: normal;
@@ -119,4 +120,23 @@
   text-align: center;
   color: #8B8B8B;
   padding-bottom: 0;
+}
+
+@media screen and (max-width: 810px) {
+  .about-project__wrapper {
+    padding: 90px 50px;
+  }
+  .about-project__container-subtitle {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 93px;
+    max-width: 319px;
+  }
+  .about-project__container-title {
+    margin: 0 auto 22px 0;
+  }
+
+  .about-project__progress_back {
+    max-width: 140px;
+  }
 }

@@ -46,3 +46,9 @@
   text-align: center;
   background-color: #303030;
 }
+
+@media screen and (max-width: 810px) {
+  .navtab__wrapper {
+    max-width: 728px;
+  }
+}

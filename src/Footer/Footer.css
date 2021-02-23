@@ -1,8 +1,8 @@
 .footer__wrapper {
-  margin: 0 70px;
+  max-width: 1280px;
+  margin: 0 auto;
   background-color: #202020;
-  padding-top: 79px;
-  padding-bottom: 20px;
+  padding: 79px 70px 28px;
 }
 
 .footer__title {

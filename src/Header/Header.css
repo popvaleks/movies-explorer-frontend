@@ -4,6 +4,7 @@
   padding: 0 40px;
 }
 
+
 .header__header-static {
   display: flex;
   padding: 18px 30px;
@@ -45,4 +46,11 @@
   font-size: 12px;
   line-height: 16px;
   color: #000;
+}
+
+@media screen and (max-width: 810px) {
+  .wrapper {
+    padding: 0;
+    max-height: 74px;
+  }
 }
