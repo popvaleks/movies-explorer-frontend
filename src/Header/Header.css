@@ -4,7 +4,6 @@
   padding: 0 40px;
 }
 
-
 .header__header-static {
   display: flex;
   padding: 18px 30px;
@@ -52,5 +51,17 @@
   .wrapper {
     padding: 0;
     max-height: 74px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    max-height: 74px;
+  }
+  .header__header-static {
+    padding: 14px 18px;
+  }
+  .header__link {
+    margin-right: 14px;
   }
 }

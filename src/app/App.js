@@ -11,13 +11,11 @@ function App() {
   return (
     <div>
       <div className="App">
-        <div className="background">
           <Header>
           </Header>
           <Main>
           </Main>
           <Footer></Footer>
-        </div>
       </div>
     </div>
   );

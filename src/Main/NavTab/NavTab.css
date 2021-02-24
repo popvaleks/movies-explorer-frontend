@@ -52,3 +52,20 @@
     max-width: 728px;
   }
 }
+
+
+@media screen and (max-width: 600px) {
+  .navtab__wrapper {
+    padding: 0 17px 17px;
+  }
+  .navtab__about-navbar-item {
+    width: 82px;
+    height: 26px;
+  }
+  .navtab__about-item-button {
+    font-size: 10px;
+    line-height: 16px;
+    margin:  5px auto;
+  }
+}
+

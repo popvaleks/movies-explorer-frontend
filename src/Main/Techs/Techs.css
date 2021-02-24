@@ -1,4 +1,5 @@
 .techs__wrapper {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 100px 0;
   background-color: #272727;
@@ -58,7 +59,6 @@
   list-style-type: none;
   max-width: 800px;
   padding: 0;
-  align-items: space-between;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
@@ -71,7 +71,6 @@
   width: 90px;
   height: 60px;
 }
-
 
 .techs__button {
   width: 90px;
@@ -92,6 +91,43 @@
 }
 
 @media screen and (max-width: 810px) {
+  .techs__wrapper {
+    padding: 90px 0;
+  }
+  .techs__navbar-navbar-item {
+    width: 84px;
+    height: 57px;
+  }
+  .techs__button {
+    width: 84px;
+    height: 57px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs__wrapper {
+    padding: 70px 0;
+  }
+  .tech__content {
+    padding: 0 18px;
+  }
+  .techs__tittle {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 25px;
+    margin-bottom: 60px;
+  }
+  .techs__subtitle {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 24px;
+  }
+  .techs__subtitle-text {
+    font-size: 11px;
+    line-height: 16px;
+    padding: 0 10px;
+    margin-bottom: 50px;
+  }
   .techs__navbar-navbar-item {
     max-width: 84px;
     max-height: 90px;
@@ -99,5 +135,16 @@
   .techs__button {
     width: 84px;
     height: 57px;
+  }
+}
+
+@media screen and (max-width:350px) {
+  .techs__navbar {
+    max-width: 218px;
+    margin: 0 auto;
+  }
+  .techs__navbar-navbar-item:last-child {
+   margin-right: auto;
+   margin-bottom: 0;
   }
 }
