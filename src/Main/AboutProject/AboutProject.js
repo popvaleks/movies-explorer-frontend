@@ -1,9 +1,9 @@
 import React from 'react';
 import './AboutProject.css';
 
-function AboutProject() {
+function AboutProject({ id }) {
   return (
-    <div className="about-project__wrapper">
+    <div id={id} className="about-project__wrapper">
       <h2 className="about-project__tittle">О проекте</h2>
       <div className="about-project__content">
         <div className="about-project__container">

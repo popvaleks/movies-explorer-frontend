@@ -17,7 +17,8 @@ function Main() {
         <NavTab>
         </NavTab>
       </div>
-      <AboutProject></AboutProject>
+      <AboutProject
+      id="id1"></AboutProject>
       <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
