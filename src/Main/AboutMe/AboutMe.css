@@ -97,6 +97,12 @@
   line-height: 17px;
   color: #FFFFFF;
   text-decoration: none;
+  transition: color 0.2s linear;
+}
+
+.about-me__link:hover {
+  color: rgb(136, 135, 135);
+  text-decoration: underline;
 }
 
 .about-me__navbar-navbar-item {

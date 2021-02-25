@@ -24,6 +24,11 @@
   padding-bottom: 19px;
   border-bottom: 1px solid #424242;
   text-decoration: none;
+  color: #FFFFFF;
+}
+
+.portfolio__link:hover p {
+  color: #aaaaaa;
 }
 
 .portfolio__link:last-child {
@@ -42,6 +47,7 @@
   /* identical to box height, or 167% */
   letter-spacing: -0.04em;
   color: #FFFFFF;
+  transition: color 0.2s linear;
 }
 
 .portfolio__link-arrow {
@@ -55,6 +61,7 @@
   letter-spacing: -0.04em;
   color: #FFFFFF;
   margin: 0;
+  transition: color 0.2s linear;
 }
 
 @media screen and (max-width: 810px) {

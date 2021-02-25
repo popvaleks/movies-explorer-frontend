@@ -5,11 +5,13 @@
     "react/prop-types": 0
   },
   "extends": [
-    "airbnb-base",
+    // "airbnb-base",
+
     "plugin:react/recommended"
   ],
   "env": {
     "browser": true,
     "node": true
-  }
+  },
+  "parser": "babel-eslint"
 }

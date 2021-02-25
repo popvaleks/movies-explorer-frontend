@@ -88,6 +88,21 @@
   color: #FFFFFF;
   background-color: #303030;
   border: none;
+  transition: background-color 0.4s ease, scale 0.1s ease;
+}
+
+.techs__button:hover {
+  background-color: #535353;
+  cursor: pointer;
+}
+
+.techs__button:focus {
+  outline: none;
+}
+
+.techs__button:active {
+  background-color: #868585;
+  transform: scale(1.3);
 }
 
 @media screen and (max-width: 810px) {
@@ -144,7 +159,7 @@
     margin: 0 auto;
   }
   .techs__navbar-navbar-item:last-child {
-   margin-right: auto;
-   margin-bottom: 0;
+    margin-right: auto;
+    margin-bottom: 0;
   }
 }

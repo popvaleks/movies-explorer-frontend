@@ -4,8 +4,8 @@ import avatar from '../../images/pic__COLOR_pic.jpg';
 
 function AboutMe() {
   return (
-    <div className="about-me__wrapper">
-      <h2 className="about-me__tittle">Студент</h2>
+    <div id="aboutMe" className="about-me__wrapper">
+      <h2  className="about-me__tittle">Студент</h2>
       <div className="about-me__container">
         <div className="about-me__block">
           <p className="about-me__subtitle">Александр</p>
@@ -21,10 +21,10 @@ function AboutMe() {
       <nav className="about-me__navbar">
         <ul className="about-me__navbar-list">
           <li className="about-me__navbar-navbar-item">
-            <a href="!#" className="about-me__link">Facebook</a>
+            <a href="https://www.facebook.com/" target='_blank' rel="noreferrer" className="about-me__link">Facebook</a>
           </li>
           <li className="about-me__navbar-navbar-item">
-            <a href="!#" className="about-me__link">Github</a>
+            <a href="https://github.com/popvaleks" target='_blank' rel="noreferrer" className="about-me__link">Github</a>
           </li>
         </ul>
       </nav>

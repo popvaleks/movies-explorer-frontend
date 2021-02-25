@@ -45,6 +45,13 @@
 
 .footer__navbar-link {
   margin-left: 20px;
+}
+
+.footer__navbar-link:hover {
+  color: #aaaaaa;
+}
+
+.footer__link {
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
@@ -53,6 +60,12 @@
   /* identical to box height */
   text-align: right;
   color: #FFFFFF;
+  transition: color 0.2s linear;
+  text-decoration: none;
+}
+
+.footer__link:hover {
+  color: #aaaaaa;
 }
 
 .footer__navbar-link:last-child {

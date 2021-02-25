@@ -30,6 +30,10 @@
   margin-right: 0;
 }
 
+.navtab__about-item-link {
+  text-decoration: none;
+}
+
 .navtab__about-item-button {
   font-family: Inter;
   font-style: normal;
@@ -45,6 +49,21 @@
   padding: 0;
   text-align: center;
   background-color: #303030;
+  transition: background-color 0.4s ease, scale 0.1s ease;
+}
+
+.navtab__about-item-button:hover {
+  background-color: #535353;
+  cursor: pointer;
+}
+
+.navtab__about-item-button:focus {
+  outline: none;
+}
+
+.navtab__about-item-button:active {
+  background-color: #868585;
+  transform: scale(1.3);
 }
 
 @media screen and (max-width: 810px) {
@@ -52,7 +71,6 @@
     max-width: 728px;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .navtab__wrapper {
@@ -65,7 +83,6 @@
   .navtab__about-item-button {
     font-size: 10px;
     line-height: 16px;
-    margin:  5px auto;
+    margin: 5px auto;
   }
 }
-
