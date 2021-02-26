@@ -47,6 +47,78 @@
   color: #000;
 }
 
+.header__movies {
+  margin: 0 0 auto 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Movies */
+
+.header__button-profile {
+  margin-left: 50px;
+  border: none;
+  width: 100px;
+  height: 30px;
+  padding: 0;
+  background-color: #202020;
+  display: flex;
+  border-radius: 6px;
+  transition: all 0.4s ease, scale 0.1s ease;
+}
+
+.header__button-profile:hover {
+  cursor: pointer;
+}
+
+.header__button-profile:hover .header__button-profile-text {
+  text-decoration: underline;
+}
+
+.header__button-profile:hover .header__button-profile-wrapper {
+  background-color: #494949;
+  transition: all 0.2s ease;
+}
+
+.header__button-profile:focus {
+  outline: none;
+}
+
+.header__button-profile:active {
+  border: 1px solid rgb(61, 61, 61);
+}
+
+.header__button-profile-wrapper {
+  width: 26px;
+  height: 30px;
+  background-color: #313131;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+/* .header__button-profile-wrapper:hover */
+
+.header__button-profile-text {
+  text-align: left;
+  height: 30px;
+  margin: auto auto auto 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+.header__button-profile-img {
+  width: 11.5px;
+  height: 14px;
+  margin: 8px 7.5px;
+}
+
 @media screen and (max-width: 810px) {
   .wrapper {
     padding: 0;

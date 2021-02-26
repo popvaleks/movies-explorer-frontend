@@ -2,10 +2,27 @@
 html {
   box-sizing: border-box;
 }
+
 *, *::before, *::after {
   box-sizing: inherit;
 }
 
 .App {
   background-color: #202020;
+}
+
+.app__content {
+  min-height: calc(100vh - 174px - 77px);
+}
+
+@media screen and (max-width: 810px) {
+  .app__content {
+    min-height: calc(100vh - 174px - 74px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .app__content {
+    min-height: calc(100vh - 172px - 74px);
+  }
 }
