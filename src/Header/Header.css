@@ -33,7 +33,6 @@
   text-align: right;
   color: #FFFFFF;
   margin-right: 30px;
-  text-decoration: none;
 }
 
 .header__button {
@@ -113,16 +112,205 @@
   color: #FFFFFF;
 }
 
+.header__link_mobile {
+  display: none;
+}
+
 .header__button-profile-img {
   width: 11.5px;
   height: 14px;
   margin: 8px 7.5px;
 }
 
+.header__nav_movies {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.header__link-movies {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height, or 129% */
+  text-align: right;
+  color: #FFFFFF;
+  margin-right: 20px;
+}
+
+.header__link-saved {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  /* identical to box height, or 129% */
+  text-align: right;
+  color: #FFFFFF;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.menu-burger__header {
+  display: none;
+}
+
 @media screen and (max-width: 810px) {
   .wrapper {
     padding: 0;
     max-height: 74px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .overflow {
+    overflow: hidden;
+    position: relative;
+    z-index: 99;
+  }
+  .header__menu {
+    overflow: hidden;
+  }
+  .menu-burger__header {
+    display: block;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin: auto 0 auto auto;
+  }
+  .menu-burger__header:hover {
+    cursor: pointer;
+  }
+  /* .header__nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100vh;
+  } */
+  .menu-burger__header span {
+    position: absolute;
+    background-color: #fff;
+    right: 8px;
+    width: 28px;
+    height: 3px;
+    top: 20px;
+  }
+  .menu-burger__header:after, .menu-burger__header:before {
+    content: '';
+    background-color: #fff;
+    position: absolute;
+    width: 28px;
+    height: 3px;
+    right: 8px;
+  }
+  .menu-burger__header:after {
+    bottom: 11px;
+  }
+  .menu-burger__header:before {
+    top: 11px;
+  }
+  .header__nav, .header__button-profile {
+    display: none;
+  }
+  .menu-burger__bcg {
+    position: fixed;
+    width: calc(100vw - ( 520 / 768 * 100vw));
+    height: 100%;
+    right: calc(520 / 768 * 100vw);
+    top: 0;
+    z-index: 4;
+    background-color: #000000;
+    opacity: 0.3;
+    overflow: hidden;
+    transition: all .4s linear;
+  }
+  .header__movies {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(520 / 768 * 100vw);
+    height: 100vh;
+    right: 0;
+    top: 0;
+    background-color: #202020;
+    z-index: 2;
+    overflow: hidden;
+    /* padding-top: 159px; */
+    padding-top: calc(100vh * 159/1024);
+    padding-bottom: calc(100vh * 92/1024);
+    transition: all .4s linear;
+  }
+  .header__button-profile {
+    display: flex;
+    margin: auto auto 0 auto;
+  }
+  .header__nav {
+    display: block;
+    margin: 0 auto;
+  }
+  .header__list {
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .link {
+    display: block;
+    margin: 0 auto 28px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    text-align: center;
+    color: #FFFFFF;
+  }
+  .link:hover {
+    text-decoration: none;
+  }
+  .header__link-saved {
+    margin-bottom: 0;
+  }
+  .header__link-movies {
+    border-bottom: 2px solid #fff;
+  }
+  .header__button-cross {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    z-index: 4;
+    width: 29.16px;
+    height: 29.16px;
+    background: none;
+    border: none;
+    transition: all .4s linear;
+  }
+  .header__button-cross:focus {
+    outline: none;
+  }
+  .header__button-cross-line:before, .header__button-cross-line:after {
+    content: '';
+    background-color: #fff;
+    position: absolute;
+    width: 22px;
+    height: 3px;
+    top: calc(29.16px/2);
+    right: 4px;
+  }
+  .header__button-cross-line:before {
+    transform: rotate(45deg);
+  }
+  .header__button-cross-line:after {
+    transform: rotate(135deg);
   }
 }
 
@@ -136,4 +324,9 @@
   .header__link {
     margin-right: 14px;
   }
+}
+
+.hidden {
+  right: -100vw;
+  transition: all .4s linear;
 }
