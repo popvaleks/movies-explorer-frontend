@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './SearchForm.css';
-import Preloader from '../../vendor/preloader/Preloader';
+import Preloader from '../../../vendor/preloader/Preloader';
 
 function SearchForm() {
   const [checkboxOn, setCheckboxOn] = useState('')

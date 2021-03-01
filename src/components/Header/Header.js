@@ -5,8 +5,8 @@ import {
 
 import './Header.css';
 
-import logo from '../images/logo.svg';
-import buttonProfileImg from '../images/profileIco.svg'
+import logo from '../../images/logo.svg';
+import buttonProfileImg from '../../images/profileIco.svg'
 
 function Header({ landingHeader }) {
   const [menuStatus, setMenuStatus] = useState('hidden')

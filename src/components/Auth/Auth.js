@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 
 import './Auth.css';
-import ico from '../images/logo.svg'
+import ico from '../../images/logo.svg'
 
 function Auth({
   title, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute

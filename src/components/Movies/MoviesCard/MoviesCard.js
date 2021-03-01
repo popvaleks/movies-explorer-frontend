@@ -5,8 +5,8 @@ import {
 
 import './MoviesCard.css';
 
-import unSaveImg from '../../images/saveBDd.svg';
-import saveImg from '../../images/save9BE.svg';
+import unSaveImg from '../../../images/saveBDd.svg';
+import saveImg from '../../../images/save9BE.svg';
 
 
 function MoviesCard({ cardName, cardDuration, cardImg }) {

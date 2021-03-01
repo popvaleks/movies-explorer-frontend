@@ -3,7 +3,7 @@ import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
 
-import '../utils/normalize.css';
+import '../../utils/normalize.css';
 import './App.css';
 
 import Header from '../Header/Header';

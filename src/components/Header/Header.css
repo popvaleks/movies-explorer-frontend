@@ -2,11 +2,12 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 40px;
+  max-height: 74px;
 }
 
 .header__header-static {
   display: flex;
-  padding: 16.5px 30px;
+  padding: 18px 30px;
   justify-content: space-between;
 }
 
@@ -365,7 +366,7 @@
     max-height: 74px;
   }
   .header__header-static {
-    padding: 14px 18px;
+    padding: 18px 14px;
   }
   .header__link {
     margin-right: 14px;

@@ -74,8 +74,8 @@
 }
 
 .about-me__img {
-  max-width: 270 px;
-  max-height: 327 px;
+  width: auto;
+  height: 327px;
   border-radius: 10px;
 }
 
@@ -152,8 +152,8 @@
   .about-me__img {
     order: -1;
     width: 100%;
-    min-width: 292px;
-    min-height: 352px;
+    width: auto;
+    height: 352px;
     margin: 0 auto 40px;
   }
   .about-me__subtitle {
