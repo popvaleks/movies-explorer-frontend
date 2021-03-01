@@ -17,20 +17,31 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 
 function App() {
   const [landingHeader, setLandigHeader] = useState(true)
-  const [wrapperHeight, setWrapperHeight] = useState('100vh')
+  const [wrapperHeight, setWrapperHeight] = useState('default')
 
   const history = useHistory();
   const location = useLocation();
 
+  const routeList = ['/sign-in', '/sign-up', '/404', '/profile', '/saved-movies', '/movies', '/'];
+
+
+  const handleErrorPageCheck = useCallback(() => {
+    const path = location.pathname;
+    if (routeList.includes(path, 0) !== true) {
+      return history.push('/404')
+    } else {
+      return
+    }
+  }, [location.pathname]);
 
   const handleWrapperHeight = useCallback(() => {
     (location.pathname === '/sign-in'
       || location.pathname === '/sign-up'
       || location.pathname === '/404')
-      ? setWrapperHeight('app__content_withOutFooterAndHeader')
+      ? setWrapperHeight('withOutFooterAndHeader')
       : location.pathname === '/profile'
-        ? setWrapperHeight('app__content_withOutFooter')
-        : setWrapperHeight('app__content')
+        ? setWrapperHeight('withOutFooter')
+        : setWrapperHeight('default')
   }, [location.pathname]);
 
   const handleRouteCheck = useCallback(() => {
@@ -42,7 +53,8 @@ function App() {
   React.useEffect(() => {
     handleRouteCheck();
     handleWrapperHeight();
-  }, [handleRouteCheck, handleWrapperHeight]);
+    handleErrorPageCheck();
+  }, [handleRouteCheck, handleWrapperHeight, handleErrorPageCheck]);
 
   return (
     <div>
@@ -51,7 +63,9 @@ function App() {
           landingHeader={landingHeader}
         >
         </Header>
-        <div className={wrapperHeight}>
+        <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'
+            : wrapperHeight === 'withOutFooter' ? 'app__content_withOutFooter'
+              : 'app__content'}`}>
           <Switch>
             <Route exact path="/">
               <Main>

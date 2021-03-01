@@ -16,7 +16,7 @@ function AboutMe() {
             работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке,
             начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
         </div>
-        <img className="about-me__img" src={avatar}></img>
+        <img className="about-me__img" alt='Веб-разработчик' src={avatar}></img>
       </div>
       <nav className="about-me__navbar">
         <ul className="about-me__navbar-list">

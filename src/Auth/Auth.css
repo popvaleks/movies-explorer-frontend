@@ -13,14 +13,13 @@
   margin: 0 auto 40px 0;
   width: 38px;
   height: 38px;
-  overflow: hidden;
   position: relative;
   background: none;
 }
 
 .auth__title {
   margin: 0 auto 40px 0;
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -51,7 +50,7 @@
 }
 
 .auth__input-title {
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
@@ -65,7 +64,7 @@
   width: 100%;
   height: 46px;
   background-color: #2F2F2F;
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
@@ -88,7 +87,7 @@
 }
 
 .auth__input-error {
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
@@ -118,7 +117,14 @@
   text-align: center;
   background: #4285F4;
   border-radius: 3px;
-  color: #fff;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  text-align: center;
+  color: #FFFFFF;
   margin-bottom: 16px;
   border: none;
   transition: all 0.2s ease;
@@ -137,7 +143,7 @@
 
 .auth__subtitle-text {
   margin: 0 6px auto 0;
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -153,7 +159,7 @@
 
 .auth__subtitle-link {
   text-decoration: none;
-  font-family: Inter;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -163,19 +169,24 @@
   color: #4285F4
 }
 
-
 @media screen and (max-width:450px) {
   .auth__wrapper {
     padding: calc(56/780*100vh) 0 calc(30/780*100vh);
     width: calc(260/320* 100vw);
   }
   .auth__landing-btn {
-    margin: 0 auto 50px;
+    margin: 0 auto;
   }
   .auth__title {
-    margin: 0 auto 80px;
+    margin: 50px auto 80px;
   }
   .auth__button {
     margin-top: 157px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .auth__subtitle-text, .auth__subtitle-link {
+    font-size: 12px;
+    line-height: 15px;
   }
 }

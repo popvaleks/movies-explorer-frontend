@@ -7,7 +7,7 @@
 
 .portfolio__title {
   margin: 0 auto 40px 0;
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -39,7 +39,7 @@
 
 .portfolio__link-text {
   margin: 0 auto 0 0;
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;
@@ -52,7 +52,7 @@
 
 .portfolio__link-arrow {
   max-height: 50px;
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;

@@ -8,7 +8,7 @@
 
 .error-page__title {
   margin: 0 auto 5px;
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 140px;
@@ -19,7 +19,7 @@
 
 .error-page__subtitle {
   margin: 0 auto calc(164/700*100vh);
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -38,7 +38,7 @@
 }
 
 .error-page__link {
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

@@ -18,8 +18,8 @@ import film12 from '../../images/cardImg/tiny/film12.jpg';
 
 function MoviesCardList() {
   return (
-    <div className="moviesCardList__wrapper">
-      <div className="moviesCardList__content">
+    <div className="movies-cardList__wrapper">
+      <div className="movies-cardList__content">
         <MoviesCard
           cardName={'33 слова о дизайне'}
           cardDuration={'1ч 47м'}
@@ -81,11 +81,14 @@ function MoviesCardList() {
           cardImg={film12}
         ></MoviesCard>
       </div>
-      <div className="moviesCardList__more">
-        <button className="moviesCardList__more-button">
-          <p className="moviesCardList__more-button-text">Еще</p>
+      <div className="movies-cardList__more">
+        <button className="movies-cardList__more-button">
+          <p className="movies-cardList__more-button-text">Еще</p>
         </button>
       </div>
+      {false && <div className="movies-cardList__not-found">
+        {`К сожалению, ни чего не найдено (`}
+      </div>}
     </div>
   );
 }

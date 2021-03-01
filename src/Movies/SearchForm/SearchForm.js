@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import './SearchForm.css';
+import Preloader from '../../vendor/preloader/Preloader';
 
 function SearchForm() {
   const [checkboxOn, setCheckboxOn] = useState('')
@@ -30,6 +32,9 @@ function SearchForm() {
         </label>
         <p className="searchForm__radio-text">Короткометражки</p>
       </div>
+      {false &&
+        <Preloader></Preloader>
+      }
     </div>
   );
 }

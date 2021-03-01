@@ -10,8 +10,7 @@ import saveImg from '../../images/save9BE.svg';
 
 
 function MoviesCard({ cardName, cardDuration, cardImg }) {
-  const [unSaveIcon, setUnSaveIcon] = useState('block')
-  const [saveIcon, setSaveIcon] = useState('none');
+  const [saved, setSaved] = useState(false);
   const [showCross, setShowCross] = useState('false');
 
   const location = useLocation();
@@ -24,15 +23,9 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
-  const disbleIco = () => {
-    setSaveIcon('none')
-    setUnSaveIcon('block')
-  }
-  const enableIco = () => {
-    setSaveIcon('block')
-    setUnSaveIcon('none')
-  }
-  const switchSaveIco = () => saveIcon === 'block' ? disbleIco() : enableIco();
+  const switchSaveIco = () => saved === false ? setSaved(true) : setSaved(false);
+
+  const removeCard = () => console.log('card removed')
 
   return (
     <div className="moviesCard__wrapper">
@@ -43,18 +36,17 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
         </div>
         {!showCross &&
           <button onClick={switchSaveIco} className="moviesCard__button moviesCard__button-save">
-            <img src={unSaveImg} className="moviesCard__button-image" style={{ display: unSaveIcon }}></img>
-            <img src={saveImg} className="moviesCard__button-image" style={{ display: saveIcon }}></img>
+            <img alt='Фильмы' src={saved ? saveImg : unSaveImg} className="moviesCard__button-image"></img>
           </button>
         }
         {showCross &&
-          <button onClick='#' className="moviesCard__button moviesCard__button-cross">
+          <button onClick={removeCard} className="moviesCard__button moviesCard__button-cross">
             <div className="moviesCard__button-cross-line"></div>
           </button>
         }
       </div>
       <div className="moviesCard__img-wrapper">
-        <img className="moviesCard__img" src={cardImg}></img>
+        <img alt='Фильмы' className="moviesCard__img" src={cardImg}></img>
       </div>
     </div >
   );

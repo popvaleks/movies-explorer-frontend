@@ -16,7 +16,7 @@ function Auth({
 
   return (
     <div className="auth__wrapper">
-      <button onClick={() => linkClick('/')} className="button auth__landing-btn">
+      <button type="button" onClick={() => linkClick('/')} className="button auth__landing-btn">
         <img src={ico} alt="Дипломный проект" className="auth__img" />
       </button>
       <h2 className="auth__title">{title}</h2>

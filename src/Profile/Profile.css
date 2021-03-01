@@ -15,7 +15,7 @@
 }
 
 .profile__header {
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -51,7 +51,7 @@
 
 .profile__info-text {
   max-width: calc(100%/4);
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -84,7 +84,7 @@
 
 .profile__edit {
   margin-bottom: 16px;
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
@@ -97,7 +97,7 @@
 }
 
 .profile__log-out {
-  font-family: Inter;
+  font-family:'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;

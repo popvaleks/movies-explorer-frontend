@@ -10,10 +10,11 @@ import buttonProfileImg from '../images/profileIco.svg'
 
 function Header({ landingHeader }) {
   const [menuStatus, setMenuStatus] = useState('hidden')
-  const [headerOn, setHeaderOn] = useState('block')
+  const [headerOn, setHeaderOn] = useState(true)
 
   const history = useHistory();
   const location = useLocation();
+
   const linkClick = (path) => {
     history.push(path)
   };
@@ -28,10 +29,10 @@ function Header({ landingHeader }) {
 
   const handleRouteCheck = useCallback(() => {
     (location.pathname === '/'
-    || location.pathname === '/movies'
-    || location.pathname === '/saved-movies'
-    || location.pathname === '/profile'
-    ) ? setHeaderOn('block') : setHeaderOn('none');
+      || location.pathname === '/movies'
+      || location.pathname === '/saved-movies'
+      || location.pathname === '/profile'
+    ) ? setHeaderOn(true) : setHeaderOn(false);
   }, [location.pathname]);
 
   React.useEffect(() => {
@@ -39,11 +40,11 @@ function Header({ landingHeader }) {
   }, [handleRouteCheck]);
 
   return (
-    <header className="header" style={{display: headerOn}}>
+    <header className={`header ${!headerOn && 'header__hidden'}`}>
       <div className="wrapper">
         <div className="header__header-static">
           <div className="header__logo">
-            <a href="/" className="header__logo-link">
+            <a href="" onClick={() => linkClick('/')} className="header__logo-link">
               <img src={logo} alt="Моя фильмотека" className="header__logo-pic"></img>
             </a>
           </div>
@@ -53,7 +54,7 @@ function Header({ landingHeader }) {
                 <li className="header__item">
                   <a href="" onClick={() => linkClick('/sign-up')} className="link header__link">Регистрация</a>
                 </li>
-                <button type='button' className="header__button">Войти</button>
+                <button type='button' onClick={() => linkClick('/sign-in')} className="button header__button">Войти</button>
               </ul>
             </nav>
           }
@@ -66,22 +67,22 @@ function Header({ landingHeader }) {
                 <div className={`menu-burger__bcg ${menuStatus}`}></div>
                 <div className={`header__movies ${menuStatus}`}>
                   <nav className="header__nav header__nav_movies">
-                    <ul className="header__list">
-                      <li className="header__item">
-                        <a href="" onClick={() => linkClick('/')} className="link header__link_mobile">Главная</a>
+                    <ul className="header__list header__list_movies">
+                      <li className="header__item header__item_movies">
+                        <a href="" onClick={() => linkClick('/')} className="link_movies header__link_mobile">Главная</a>
                       </li>
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('movies')} className="link header__link-movies">Фильмы</a>
+                        <a href="" onClick={() => linkClick('movies')} className="link_movies header__link-movies">Фильмы</a>
                       </li>
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('saved-movies')} className="link header__link-saved">Сохранённые фильмы</a>
+                        <a href="" onClick={() => linkClick('saved-movies')} className="link_movies header__link-saved">Сохранённые фильмы</a>
                       </li>
                     </ul>
                   </nav>
                   <button onClick={() => linkClick('profile')} type='button' className="header__button-profile">
                     <p className="header__button-profile-text">Аккаунт</p>
                     <div className="header__button-profile-wrapper">
-                      <img src={buttonProfileImg} className="header__button-profile-img"></img>
+                      <img src={buttonProfileImg} alt='Дипломный проект' className="header__button-profile-img"></img>
                     </div>
                   </button>
                   <button onClick={menuSwap} className={`header__button-cross ${menuStatus}`}>
