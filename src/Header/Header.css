@@ -6,7 +6,7 @@
 
 .header__header-static {
   display: flex;
-  padding: 18px 30px;
+  padding: 16.5px 30px;
   justify-content: space-between;
 }
 
@@ -162,6 +162,10 @@
   display: none;
 }
 
+.header__button-cross {
+  display: none;
+}
+
 @media screen and (max-width: 810px) {
   .wrapper {
     padding: 0;
@@ -284,6 +288,7 @@
     border-bottom: 2px solid #fff;
   }
   .header__button-cross {
+    display: block;
     position: fixed;
     top: 22px;
     right: 22px;
@@ -323,6 +328,12 @@
   }
   .header__link {
     margin-right: 14px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header__item {
+    max-width: 150px;
   }
 }
 

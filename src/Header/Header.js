@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
@@ -10,18 +10,36 @@ import buttonProfileImg from '../images/profileIco.svg'
 
 function Header({ landingHeader }) {
   const [menuStatus, setMenuStatus] = useState('hidden')
+  const [headerOn, setHeaderOn] = useState('block')
 
   const history = useHistory();
   const location = useLocation();
   const linkClick = (path) => {
     history.push(path)
   };
-  const menuSwap = () => {
-    menuStatus === 'hidden' ? setMenuStatus('') : setMenuStatus('hidden')
+  const scrollPage = (condition) => {
+    condition === true ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'visible'
   };
+  const menuSwap = () => {
+    menuStatus === 'hidden'
+      ? (setMenuStatus(''), scrollPage(true))
+      : (setMenuStatus('hidden'), scrollPage(false))
+  }
+
+  const handleRouteCheck = useCallback(() => {
+    (location.pathname === '/'
+    || location.pathname === '/movies'
+    || location.pathname === '/saved-movies'
+    || location.pathname === '/profile'
+    ) ? setHeaderOn('block') : setHeaderOn('none');
+  }, [location.pathname]);
+
+  React.useEffect(() => {
+    handleRouteCheck();
+  }, [handleRouteCheck]);
 
   return (
-    <header className="header">
+    <header className="header" style={{display: headerOn}}>
       <div className="wrapper">
         <div className="header__header-static">
           <div className="header__logo">
@@ -33,7 +51,7 @@ function Header({ landingHeader }) {
             <nav className="header__nav">
               <ul className="header__list">
                 <li className="header__item">
-                  <a href="!#" className="link header__link">Регистрация</a>
+                  <a href="" onClick={() => linkClick('/sign-up')} className="link header__link">Регистрация</a>
                 </li>
                 <button type='button' className="header__button">Войти</button>
               </ul>
@@ -50,17 +68,17 @@ function Header({ landingHeader }) {
                   <nav className="header__nav header__nav_movies">
                     <ul className="header__list">
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('/')} className="link header__link header__link_mobile">Главная</a>
+                        <a href="" onClick={() => linkClick('/')} className="link header__link_mobile">Главная</a>
                       </li>
                       <li className="header__item">
                         <a href="" onClick={() => linkClick('movies')} className="link header__link-movies">Фильмы</a>
                       </li>
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('saved')} className="link header__link-saved">Сохранённые фильмы</a>
+                        <a href="" onClick={() => linkClick('saved-movies')} className="link header__link-saved">Сохранённые фильмы</a>
                       </li>
                     </ul>
                   </nav>
-                  <button onClick={() => linkClick('saved')} type='button' className="header__button-profile">
+                  <button onClick={() => linkClick('profile')} type='button' className="header__button-profile">
                     <p className="header__button-profile-text">Аккаунт</p>
                     <div className="header__button-profile-wrapper">
                       <img src={buttonProfileImg} className="header__button-profile-img"></img>

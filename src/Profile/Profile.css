@@ -1,0 +1,141 @@
+.profile__wrapper {
+  width: calc(410/1280 * 100vw);
+  max-width: 410px;
+  min-width: 260px;
+  margin: 0 auto;
+}
+
+.profile__content {
+  margin: 0 auto;
+  padding-top: calc(74/700*100vh);
+  padding-bottom: calc(70/700*100vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__header {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  text-align: center;
+  color: #FFFFFF;
+  text-overflow: ellipsis;
+  padding-bottom: calc(123/700*100vh);
+  margin: 0 auto;
+}
+
+.profile__info {
+  height: 62px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(220/700*100vh);
+  width: 410px;
+}
+
+.profile__info-block {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #424242;
+}
+
+.profile__info-block:last-child {
+  padding-top: 17px;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.profile__info-text {
+  max-width: calc(100%/4);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  /* identical to box height */
+  color: #FFFFFF;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.profile__info-text:last-child {
+  max-width: calc(100%/4*3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile__button {
+  background-color: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.profile__button:hover {
+  background-color: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.profile__edit {
+  margin-bottom: 16px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.profile__log-out {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  /* identical to box height */
+  text-align: center;
+  color: #EE3465;
+}
+
+@media screen and (max-width: 769px) {
+  .profile__content {
+    padding-top: calc(236/1024*100vh);
+    padding-bottom: calc(269/1024*100vh);
+  }
+  .profile__header {
+    padding-bottom: calc(96/1024*100vh);
+  }
+  .profile__info {
+    margin-bottom: calc(210/1024*100vh);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profile__info {
+    width: 60vw;
+    min-width: 260px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profile__content {
+    padding-top: calc(70/780*100vh);
+    padding-bottom: calc(40/780*100vh);
+  }
+  .profile__header {
+    padding-bottom: calc(80/780*100vh);
+  }
+  .profile__info {
+    margin-bottom: calc(379/780*100vh);
+  }
+}
