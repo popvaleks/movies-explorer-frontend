@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6d29ef4a.chunk.css",
+    "main.js": "/static/js/main.c2aafc1c.chunk.js",
+    "main.js.map": "/static/js/main.c2aafc1c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.91685d7f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.91685d7f.js.map",
+    "static/js/2.3aafd58d.chunk.js": "/static/js/2.3aafd58d.chunk.js",
+    "static/js/2.3aafd58d.chunk.js.map": "/static/js/2.3aafd58d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.6d29ef4a.chunk.css.map": "/static/css/main.6d29ef4a.chunk.css.map",
+    "static/js/2.3aafd58d.chunk.js.LICENSE.txt": "/static/js/2.3aafd58d.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/Inter-Medium.cc6a8868.woff",
+    "static/media/film1.9047cb60.jpg": "/static/media/film1.9047cb60.jpg",
+    "static/media/film10.3bf5a16e.jpg": "/static/media/film10.3bf5a16e.jpg",
+    "static/media/film11.b279ff8b.jpg": "/static/media/film11.b279ff8b.jpg",
+    "static/media/film12.2f51ac21.jpg": "/static/media/film12.2f51ac21.jpg",
+    "static/media/film2.2660a12b.jpg": "/static/media/film2.2660a12b.jpg",
+    "static/media/film3.90cfa631.jpg": "/static/media/film3.90cfa631.jpg",
+    "static/media/film4.b451ecf1.jpg": "/static/media/film4.b451ecf1.jpg",
+    "static/media/film5.bb7c42d5.jpg": "/static/media/film5.bb7c42d5.jpg",
+    "static/media/film6.d1064e79.jpg": "/static/media/film6.d1064e79.jpg",
+    "static/media/film7.899e01d4.jpg": "/static/media/film7.899e01d4.jpg",
+    "static/media/film8.a9faaad6.jpg": "/static/media/film8.a9faaad6.jpg",
+    "static/media/film9.5567b7a1.jpg": "/static/media/film9.5567b7a1.jpg",
+    "static/media/logo.8bce3dd2.svg": "/static/media/logo.8bce3dd2.svg",
+    "static/media/pic__COLOR_pic.359dc941.jpg": "/static/media/pic__COLOR_pic.359dc941.jpg",
+    "static/media/profileIco.1c3fd4ad.svg": "/static/media/profileIco.1c3fd4ad.svg",
+    "static/media/save9BE.cbdfef3e.svg": "/static/media/save9BE.cbdfef3e.svg",
+    "static/media/saveBDd.44eadceb.svg": "/static/media/saveBDd.44eadceb.svg",
+    "static/media/SearchForm.css": "/static/media/searchicon.f7e4b932.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.91685d7f.js",
+    "static/js/2.3aafd58d.chunk.js",
+    "static/css/main.6d29ef4a.chunk.css",
+    "static/js/main.c2aafc1c.chunk.js"
+  ]
+}

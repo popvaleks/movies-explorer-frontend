@@ -79,8 +79,8 @@ function Header({ landingHeader }) {
                       </li>
                     </ul>
                   </nav>
-                  <button onClick={() => linkClick('profile')} type='button' className="header__button-profile">
-                    <p className="header__button-profile-text">Аккаунт</p>
+                  <button onClick={() => linkClick('profile')} type='button' className="header__button-profile header__button-profile-text">
+                    Аккаунт
                     <div className="header__button-profile-wrapper">
                       <img src={buttonProfileImg} alt='Дипломный проект' className="header__button-profile-img"></img>
                     </div>
