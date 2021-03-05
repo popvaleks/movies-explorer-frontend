@@ -51,14 +51,47 @@ export const authorize = (email, password) => {
     })
 }
 
+export const editProfile = (email, name) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, name }),
+  })
+    .then((res) => {
+      if (res.ok && res.status !== 204) { // no content
+        return res.json()
+      } else {
+        return Promise.reject(
+          new ErrorApiCodeHandler(res.status, `Ошибка: ${res.status} (${res.statusText})`),
+        )
+      }
+    })
+}
+
 export const getUserInfo = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
-      // 'Accept': 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'Authorization': `Bearer ${jwt}`,
+    },
+  })
+    .then(res => res.json())
+    .then(data => data)
+}
+
+export const signOut = () => {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
   })
     .then(res => res.json())

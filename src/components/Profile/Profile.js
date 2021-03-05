@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {
+  useHistory, Switch, Route, useLocation,
+} from 'react-router-dom';
 
 import './Profile.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
 function Profile() {
-  const name = 'Виталий';
-  const email = 'pochta@yandex.ru'
+  const history = useHistory();
+  const currentUser = useContext(CurrentUserContext)
+  const name = currentUser.name;
+  const email = currentUser.email;
+  const linkClick = (path) => {
+    history.push(path)
+  };
   return (
     <div className="profile__wrapper">
       <div className="profile__content">
@@ -19,7 +28,7 @@ function Profile() {
             <p className="profile__info-text">{email}</p>
           </div>
         </div>
-        <button className="profile__button profile__edit">Редактировать</button>
+        <button onClick={() => linkClick('/edit-profile')} className="profile__button profile__edit">Редактировать</button>
         <button className="profile__button profile__log-out">Выйти из аккаунта</button>
       </div>
 

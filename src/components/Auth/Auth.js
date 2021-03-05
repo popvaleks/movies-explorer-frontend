@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
@@ -6,10 +6,11 @@ import {
 import './Auth.css';
 import ico from '../../images/logo.svg';
 import * as auth from '../../utils/MainApi';
-import errorHandler from '../../helpers/errorHandler'
+import errorHandler from '../../helpers/errorHandler';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Auth({
-  title, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute
+  title, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute, setLoggedIn, passField, editProfile
 }) {
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
@@ -24,6 +25,7 @@ function Auth({
   const [reqError, setReqError] = useState('');
 
   const history = useHistory();
+  const currentUser = useContext(CurrentUserContext)
 
   const handleEmailChange = (evt) => {
     setEmailInput(evt.target.value)
@@ -83,15 +85,46 @@ function Auth({
         setFormValid(true)
         setReqError('')
       }
-    } else {
+    } else if (location.pathname === '/sign-in') {
       if (emailError || passwordError) {
         setFormValid(false)
       } else {
         setFormValid(true)
         setReqError('')
       }
+    } else {
+      if (nameInput === '') {
+        setReqError('')
+        setNameError('')
+      }
+      if (emailInput === '') {
+        setReqError('')
+        setEmailError('')
+      }
+      if (nameInput === '' && emailInput === '' || emailError || nameError) {
+                setFormValid(false)
+      } else if (nameInput === currentUser.name || emailInput === currentUser.email) {
+        setReqError('Введите новые значения')
+        setFormValid(false)
+      } else {
+        setReqError('')
+        setFormValid(true)
+      }
+      // if (nameInput === '' && !emailError) {
+      //   setReqError('')
+      //   setFormValid(true)
+      // } else if (emailInput === '' && !nameError) {
+      //   setReqError('')
+      //   setFormValid(true)
+      // } else if (emailInput !== '' && emailError) {
+      //   setFormValid(false)
+      // } else if (nameInput !== '' && nameError) {
+      //   setFormValid(false)
+      // } else {
+      //   setFormValid(true)
+      // }
     }
-  }, [emailError, passwordError, nameError])
+  }, [nameInput, emailInput, password])
 
   const resetForm = () => {
     setEmailInput('');
@@ -118,7 +151,8 @@ function Auth({
       ? auth.authorize(emailInput, password)
         .then((data) => {
           resetForm();
-          history.push('/');
+          setLoggedIn(true);
+          history.push('/movies');
         })
         .catch((err) => {
           setReqError(errorHandler(err.code));
@@ -126,18 +160,28 @@ function Auth({
           setFormValid(false);
           setPasswordDirty(false);
         })
-      : auth.register(emailInput, password, nameInput)
-        .then((data) => {
-          setPassword('');
-          setNameInput('');
-          history.push('/sign-in');
-        })
-        .catch((err) => {
-          setReqError(errorHandler(err.code));
-          setPassword('');
-          setFormValid(false);
-          setPasswordDirty(false);
-        })
+      : location.pathname === '/edit-profile'
+        ? auth.editProfile(emailInput, nameInput)
+          .then((data) => {
+            resetForm();
+            history.push('/profile');
+          })
+          .catch((err) => {
+            setReqError(errorHandler(err.code));
+            setFormValid(false);
+          })
+        : auth.register(emailInput, password, nameInput)
+          .then((data) => {
+            setPassword('');
+            setNameInput('');
+            history.push('/sign-in');
+          })
+          .catch((err) => {
+            setReqError(errorHandler(err.code));
+            setPassword('');
+            setFormValid(false);
+            setPasswordDirty(false);
+          })
   }
 
   return (
@@ -152,8 +196,8 @@ function Auth({
           {nameField &&
             <div className="auth__input-wrapper">
               <p className="auth__input-title">Имя</p>
-              <input onChange={handleNameChange} onBlur={blurHandler} value={nameInput}
-                type="text" className={`auth__input ${nameDirty && nameError && "auth__subtitle-text_error"}`} required id="name" name="name" />
+              <input onChange={handleNameChange} onBlur={blurHandler} value={nameInput} placeholder={editProfile && currentUser.name}
+                type="text" className={`auth__input ${nameDirty && nameError && "auth__subtitle-text_error"}`} required={editProfile ? false : true} id="name" name="name" />
               {(nameDirty && nameError) &&
                 <span className="auth__input-error">{nameError}</span>}
             </div>
@@ -161,19 +205,20 @@ function Auth({
           {/* Email */}
           <div className="auth__input-wrapper">
             <p className="auth__input-title">E-mail</p>
-            <input value={emailInput} onChange={handleEmailChange} onBlur={blurHandler}
-              type="text" className={`auth__input ${emailDirty && emailError && "auth__subtitle-text_error"}`} required id="email" name="email" />
+            <input value={emailInput} onChange={handleEmailChange} onBlur={blurHandler} placeholder={editProfile && currentUser.email}
+              type="text" className={`auth__input ${emailDirty && emailError && "auth__subtitle-text_error"}`} required={editProfile ? false : true} id="email" name="email" />
             {(emailDirty && emailError) &&
               <span className="auth__input-error">{emailError}</span>}
           </div>
           {/* Pass */}
-          <div className="auth__input-wrapper">
-            <p className="auth__input-title">Пароль</p>
-            <input value={password} onChange={handlePasswordChange} onBlur={blurHandler}
-              type="password" className={`auth__input ${passwordDirty && passwordError && "auth__subtitle-text_error"}`} required id="password" name="password" />
-            {(passwordDirty && passwordError) &&
-              <span className="auth__input-error">{passwordError}</span>}
-          </div>
+          {passField &&
+            <div className="auth__input-wrapper">
+              <p className="auth__input-title">Пароль</p>
+              <input value={password} onChange={handlePasswordChange} onBlur={blurHandler}
+                type="password" className={`auth__input ${passwordDirty && passwordError && "auth__subtitle-text_error"}`} required id="password" name="password" />
+              {(passwordDirty && passwordError) &&
+                <span className="auth__input-error">{passwordError}</span>}
+            </div>}
         </div>
         {(reqError !== '') &&
           <span className="auth__req-error">{reqError}</span>}

@@ -4,11 +4,12 @@ import {
 } from 'react-router-dom';
 
 import './Header.css';
-
 import logo from '../../images/logo.svg';
-import buttonProfileImg from '../../images/profileIco.svg'
+import buttonProfileImg from '../../images/profileIco.svg';
+import { removeCookie } from '../../utils/cookieHandler';
+import * as auth from '../../utils/MainApi';
 
-function Header({ landingHeader }) {
+function Header({ landingHeader, loggedIn, setLoggedIn, }) {
   const [menuStatus, setMenuStatus] = useState('hidden')
   const [headerOn, setHeaderOn] = useState(true)
 
@@ -39,6 +40,13 @@ function Header({ landingHeader }) {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
+  const handleSignOut = () => {
+    removeCookie('jwt');
+    auth.signOut();
+    setLoggedIn(false);
+    history.push('/')
+  }
+
   return (
     <header className={`header ${!headerOn && 'header__hidden'}`}>
       <div className="wrapper">
@@ -48,13 +56,23 @@ function Header({ landingHeader }) {
               <img src={logo} alt="Моя фильмотека" className="header__logo-pic"></img>
             </a>
           </div>
-          {landingHeader &&
+          {landingHeader && !loggedIn &&
             <nav className="header__nav">
               <ul className="header__list">
                 <li className="header__item">
                   <a href="" onClick={() => linkClick('/sign-up')} className="link header__link">Регистрация</a>
                 </li>
                 <button type='button' onClick={() => linkClick('/sign-in')} className="button header__button">Войти</button>
+              </ul>
+            </nav>
+          }
+          {landingHeader && loggedIn &&
+            <nav className="header__nav">
+              <ul className="header__list">
+                <li className="header__item">
+                  <a href="" onClick={() => linkClick('/movies')} className="link header__link">Фильмы</a>
+                </li>
+                <button type='button' onClick={handleSignOut} className="button header__button">Выйти</button>
               </ul>
             </nav>
           }

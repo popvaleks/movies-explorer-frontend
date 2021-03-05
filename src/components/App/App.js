@@ -14,15 +14,25 @@ import Saved from '../Saved/Saved';
 import Profile from '../Profile/Profile';
 import Footer from '../Footer/Footer';
 import ErrorPage from '../ErrorPage/ErrorPage';
+import ProtectedRoute from './ProtectedRoute';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { getCookie } from '../../utils/cookieHandler'
+import * as auth from '../../utils/MainApi';
+
+const log = true;
 
 function App() {
   const [landingHeader, setLandigHeader] = useState(true)
   const [wrapperHeight, setWrapperHeight] = useState('default')
+  const [currentUser, setCurrentUser] = React.useState({
+    name: '', film: [], email: '', _id: '',
+  })
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const history = useHistory();
   const location = useLocation();
 
-  const routeList = ['/sign-in', '/sign-up', '/404', '/profile', '/saved-movies', '/movies', '/'];
+  const routeList = ['/sign-in', '/sign-up', '/404', '/profile', '/saved-movies', '/movies', '/', '/edit-profile'];
 
 
   const handleErrorPageCheck = useCallback(() => {
@@ -37,6 +47,7 @@ function App() {
   const handleWrapperHeight = useCallback(() => {
     (location.pathname === '/sign-in'
       || location.pathname === '/sign-up'
+      || location.pathname === '/edit-profile'
       || location.pathname === '/404')
       ? setWrapperHeight('withOutFooterAndHeader')
       : location.pathname === '/profile'
@@ -56,63 +67,86 @@ function App() {
     handleErrorPageCheck();
   }, [handleRouteCheck, handleWrapperHeight, handleErrorPageCheck]);
 
+  const uploadUserInfo = () => {
+    auth.getUserInfo()
+      .then((data) => {
+        setCurrentUser(data)
+      })
+      .catch((err) => { console.log(err) })
+  }
+
+  const handleTokenCheck = () => {
+    const jwt = getCookie('jwt')
+    const path = location.pathname;
+    if (jwt) {
+      setLoggedIn(true);
+      uploadUserInfo();
+      history.push(path);
+      console.log(currentUser)
+    }
+  }
+
+  React.useEffect(() => {
+    handleTokenCheck();
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <div>
-      <div className="App">
-        <Header
-          landingHeader={landingHeader}
-        >
-        </Header>
-        <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'
+    <CurrentUserContext.Provider value={currentUser}>
+      <div>
+        <div className="App">
+          <Header
+            landingHeader={landingHeader}
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+          />
+          <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'
             : wrapperHeight === 'withOutFooter' ? 'app__content_withOutFooter'
               : 'app__content'}`}>
-          <Switch>
-            <Route exact path="/">
-              <Main>
-              </Main>
-            </Route>
-            <Route exact path="/sign-up">
-              <Auth
+            <Switch>
+              <Route exact path="/">
+                <Main />
+              </Route>
+              <ProtectedRoute path="/sign-up" loggedIn={!loggedIn} component={Auth}
                 title='Добро пожаловать!'
                 nameField='true'
+                passField='true'
                 btnText='Зарегестрироваться'
                 subtitleText='Уже зарегестрированы'
                 subtitleLink='Войти'
                 subtitleLinkRoute='sign-in'
-              >
-              </Auth>
-            </Route>
-            <Route exact path="/sign-in">
-              <Auth
+              />
+              <ProtectedRoute path="/sign-in" loggedIn={!loggedIn} component={Auth}
+                setLoggedIn={setLoggedIn}
                 title='Рады видеть!'
+                passField='true'
                 btnText='Войти'
                 subtitleText='Еще не зарегестрированы'
                 subtitleLink='Регистрация'
                 subtitleLinkRoute='sign-up'
-              >
-              </Auth>
-            </Route>
-            <Route path="/movies">
-              <Movies>
-              </Movies>
-            </Route>
-            <Route path="/saved-movies">
-              <Saved>
-              </Saved>
-            </Route>
-            <Route path="/profile">
-              <Profile>
-              </Profile>
-            </Route>
-            <Route path="/404">
-              <ErrorPage>
-              </ErrorPage>
-            </Route>
-          </Switch>
+              />
+              <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}>
+              </ProtectedRoute>
+              <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={currentUser.loggedIn}>
+              </ProtectedRoute>
+              <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile" />
+              <ProtectedRoute loggedIn={loggedIn} component={Auth} path="/edit-profile"
+                title='Введите новые данные!'
+                editProfile='true'
+                nameField='true'
+                btnText='Сохранить'
+                subtitleText='Передумали?'
+                subtitleLink='Назад'
+                subtitleLinkRoute='/profile' />
+              <Route path="/404">
+                <ErrorPage />
+              </Route>
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer></Footer>
-      </div>
-    </div >
+      </div >
+    </CurrentUserContext.Provider>
   );
 }
 
