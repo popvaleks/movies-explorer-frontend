@@ -25,7 +25,7 @@ function App() {
   const [landingHeader, setLandigHeader] = useState(true)
   const [wrapperHeight, setWrapperHeight] = useState('default')
   const [currentUser, setCurrentUser] = React.useState({
-    name: '', film: [], email: '', _id: '',
+    name: '', film: [], email: '', _id: ''
   })
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -33,7 +33,6 @@ function App() {
   const location = useLocation();
 
   const routeList = ['/sign-in', '/sign-up', '/404', '/profile', '/saved-movies', '/movies', '/', '/edit-profile'];
-
 
   const handleErrorPageCheck = useCallback(() => {
     const path = location.pathname;
@@ -67,38 +66,82 @@ function App() {
     handleErrorPageCheck();
   }, [handleRouteCheck, handleWrapperHeight, handleErrorPageCheck]);
 
-  const uploadUserInfo = () => {
+  const uploadUserInfo = useCallback(() => {
     auth.getUserInfo()
       .then((data) => {
         setCurrentUser(data)
       })
       .catch((err) => { console.log(err) })
+  }, [loggedIn])
+
+  const upDateUserInfo = useCallback(() => {
+    auth.getUserInfo()
+      .then((data) => {
+        setCurrentUser(data)
+      })
+      .catch((err) => { console.log(err) })
+  }, [currentUser])
+
+  // const handleTokenCheck = () => {
+  //   const jwt = getCookie('jwt')
+  //   const path = location.pathname;
+  //   if (jwt) {
+  //     setLoggedIn(true);
+  //     uploadUserInfo();
+  //     console.log(currentUser)
+  //   }
+  // }
+
+  // const handleTokenCheck = useCallback(() => {
+  //   const jwt = getCookie('jwt')
+  //   const path = location.pathname;
+  //   if (jwt) {
+  //     setLoggedIn(true);
+  //     console.log(loggedIn)
+  //     uploadUserInfo();
+  //     console.log('itsWorked')
+  //   } else {
+  //     setLoggedIn(false);
+  //     setCurrentUser('');
+  //     console.log('not logined')
+  //   }
+  // }, [loggedIn]);
+
+  // React.useEffect(() => {
+  //   handleTokenCheck();
+  //   // eslint-disable-next-line
+  // }, [loggedIn]);
+
+  const logoUt = () => {
+    setLoggedIn(false);
   }
 
   const handleTokenCheck = () => {
     const jwt = getCookie('jwt')
-    const path = location.pathname;
     if (jwt) {
       setLoggedIn(true);
+      console.log(loggedIn)
       uploadUserInfo();
-      history.push(path);
-      console.log(currentUser)
+      history.push(location.pathname)
+      console.log('itsWorked')
+    } else {
+      setLoggedIn(false);
+      console.log('not logined')
     }
   }
-
   React.useEffect(() => {
     handleTokenCheck();
-    // eslint-disable-next-line
-  }, []);
+  }, [])
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    < CurrentUserContext.Provider value={currentUser} >
       <div>
         <div className="App">
           <Header
             landingHeader={landingHeader}
             loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
+            logoUt={logoUt}
+            handleTokenCheck={handleTokenCheck}
           />
           <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'
             : wrapperHeight === 'withOutFooter' ? 'app__content_withOutFooter'
@@ -127,10 +170,11 @@ function App() {
               />
               <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}>
               </ProtectedRoute>
-              <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={currentUser.loggedIn}>
+              <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={loggedIn}>
               </ProtectedRoute>
               <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile" />
               <ProtectedRoute loggedIn={loggedIn} component={Auth} path="/edit-profile"
+                upDateUserInfo={upDateUserInfo}
                 title='Введите новые данные!'
                 editProfile='true'
                 nameField='true'
@@ -146,7 +190,7 @@ function App() {
           <Footer />
         </div>
       </div >
-    </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider >
   );
 }
 

@@ -59,7 +59,11 @@ export const editProfile = (email, name) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, name }),
+    body: email === ''
+      ? JSON.stringify({ name })
+      : name === ''
+        ? JSON.stringify({ email })
+        : JSON.stringify({ email, name })
   })
     .then((res) => {
       if (res.ok && res.status !== 204) { // no content

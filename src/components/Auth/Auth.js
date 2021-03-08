@@ -10,7 +10,7 @@ import errorHandler from '../../helpers/errorHandler';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Auth({
-  title, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute, setLoggedIn, passField, editProfile
+  title, upDateUserInfo, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute, setLoggedIn, passField, editProfile
 }) {
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
@@ -79,14 +79,15 @@ function Auth({
 
   React.useEffect(() => {
     if (location.pathname === '/sign-up') {
-      if (emailError || passwordError || nameError) {
+      if (emailError || passwordError || nameError || password === ''
+        || emailInput === '' || nameInput === '') {
         setFormValid(false)
       } else {
         setFormValid(true)
         setReqError('')
       }
     } else if (location.pathname === '/sign-in') {
-      if (emailError || passwordError) {
+      if (emailError || passwordError || emailInput === '' || password === '') {
         setFormValid(false)
       } else {
         setFormValid(true)
@@ -102,7 +103,7 @@ function Auth({
         setEmailError('')
       }
       if (nameInput === '' && emailInput === '' || emailError || nameError) {
-                setFormValid(false)
+        setFormValid(false)
       } else if (nameInput === currentUser.name || emailInput === currentUser.email) {
         setReqError('Введите новые значения')
         setFormValid(false)
@@ -110,19 +111,6 @@ function Auth({
         setReqError('')
         setFormValid(true)
       }
-      // if (nameInput === '' && !emailError) {
-      //   setReqError('')
-      //   setFormValid(true)
-      // } else if (emailInput === '' && !nameError) {
-      //   setReqError('')
-      //   setFormValid(true)
-      // } else if (emailInput !== '' && emailError) {
-      //   setFormValid(false)
-      // } else if (nameInput !== '' && nameError) {
-      //   setFormValid(false)
-      // } else {
-      //   setFormValid(true)
-      // }
     }
   }, [nameInput, emailInput, password])
 
@@ -162,9 +150,17 @@ function Auth({
         })
       : location.pathname === '/edit-profile'
         ? auth.editProfile(emailInput, nameInput)
-          .then((data) => {
-            resetForm();
-            history.push('/profile');
+          .then(() => {
+            setReqError('Сохранено!');
+            setFormValid(false);
+            return new Promise(function (resolve, reject) {
+              setTimeout(() => {
+                resetForm();
+                upDateUserInfo();
+                history.push('/profile');
+                resolve();
+              }, 1000)
+            });
           })
           .catch((err) => {
             setReqError(errorHandler(err.code));

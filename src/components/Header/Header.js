@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
@@ -9,14 +9,15 @@ import buttonProfileImg from '../../images/profileIco.svg';
 import { removeCookie } from '../../utils/cookieHandler';
 import * as auth from '../../utils/MainApi';
 
-function Header({ landingHeader, loggedIn, setLoggedIn, }) {
-  const [menuStatus, setMenuStatus] = useState('hidden')
-  const [headerOn, setHeaderOn] = useState(true)
+function Header({ landingHeader, loggedIn, logoUt }) {
+  const [menuStatus, setMenuStatus] = useState('hidden');
+  const [headerOn, setHeaderOn] = useState(true);
 
   const history = useHistory();
   const location = useLocation();
 
-  const linkClick = (path) => {
+  const linkClick = (path, e) => {
+    e.preventDefault();
     history.push(path)
   };
   const scrollPage = (condition) => {
@@ -41,10 +42,12 @@ function Header({ landingHeader, loggedIn, setLoggedIn, }) {
   }, [handleRouteCheck]);
 
   const handleSignOut = () => {
-    removeCookie('jwt');
-    auth.signOut();
-    setLoggedIn(false);
-    history.push('/')
+    // removeCookie('jwt')
+    auth.signOut()
+      .then(logoUt())
+      .catch((err) => { console.log(err) })
+    history.push('/');
+    console.log('exit')
   }
 
   return (
@@ -52,7 +55,7 @@ function Header({ landingHeader, loggedIn, setLoggedIn, }) {
       <div className="wrapper">
         <div className="header__header-static">
           <div className="header__logo">
-            <a href="" onClick={() => linkClick('/')} className="header__logo-link">
+            <a href="" onClick={(e) => linkClick('/', e)} className="header__logo-link">
               <img src={logo} alt="Моя фильмотека" className="header__logo-pic"></img>
             </a>
           </div>
@@ -60,9 +63,9 @@ function Header({ landingHeader, loggedIn, setLoggedIn, }) {
             <nav className="header__nav">
               <ul className="header__list">
                 <li className="header__item">
-                  <a href="" onClick={() => linkClick('/sign-up')} className="link header__link">Регистрация</a>
+                  <a href="" onClick={(e) => linkClick('/sign-up', e)} className="link header__link">Регистрация</a>
                 </li>
-                <button type='button' onClick={() => linkClick('/sign-in')} className="button header__button">Войти</button>
+                <button type='button' onClick={(e) => linkClick('/sign-in', e)} className="button header__button">Войти</button>
               </ul>
             </nav>
           }
@@ -70,7 +73,7 @@ function Header({ landingHeader, loggedIn, setLoggedIn, }) {
             <nav className="header__nav">
               <ul className="header__list">
                 <li className="header__item">
-                  <a href="" onClick={() => linkClick('/movies')} className="link header__link">Фильмы</a>
+                  <a href="" onClick={(e) => linkClick('/movies', e)} className="link header__link">Фильмы</a>
                 </li>
                 <button type='button' onClick={handleSignOut} className="button header__button">Выйти</button>
               </ul>
@@ -87,17 +90,17 @@ function Header({ landingHeader, loggedIn, setLoggedIn, }) {
                   <nav className="header__nav header__nav_movies">
                     <ul className="header__list header__list_movies">
                       <li className="header__item header__item_movies">
-                        <a href="" onClick={() => linkClick('/')} className="link_movies header__link_mobile">Главная</a>
+                        <a href="" onClick={(e) => linkClick('/', e)} className="link_movies header__link_mobile">Главная</a>
                       </li>
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('movies')} className="link_movies header__link-movies">Фильмы</a>
+                        <a href="" onClick={(e) => linkClick('movies', e)} className="link_movies header__link-movies">Фильмы</a>
                       </li>
                       <li className="header__item">
-                        <a href="" onClick={() => linkClick('saved-movies')} className="link_movies header__link-saved">Сохранённые фильмы</a>
+                        <a href="" onClick={(e) => linkClick('saved-movies', e)} className="link_movies header__link-saved">Сохранённые фильмы</a>
                       </li>
                     </ul>
                   </nav>
-                  <button onClick={() => linkClick('profile')} type='button' className="header__button-profile header__button-profile-text">
+                  <button onClick={(e) => linkClick('profile', e)} type='button' className="header__button-profile header__button-profile-text">
                     Аккаунт
                     <div className="header__button-profile-wrapper">
                       <img src={buttonProfileImg} alt='Дипломный проект' className="header__button-profile-img"></img>
