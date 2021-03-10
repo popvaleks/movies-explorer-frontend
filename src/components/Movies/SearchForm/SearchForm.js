@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useReducer, useCallback } from 'react';
 
 import './SearchForm.css';
 import Preloader from '../../../vendor/preloader/Preloader';
+import { getAllMovies } from '../../../utils/MoviesApi'
 
-function SearchForm() {
+function SearchForm({ updateSearchList }) {
   const [checkboxOn, setCheckboxOn] = useState('')
   const [bgcToogle, setBGCToogle] = useState('')
+
+  const [moviesCardList, setMoviesCardList] = useState([])
+  const [showPreload, setShowPreload] = useState(false)
+
+  const initialArr = []
+  const reducer = (state, action, card) => {
+    switch (action) {
+      case 'increment': return state.push(card);
+      case 'like': return state.filter((c) => c._id !== card._id)
+      case 'disLike': return state.filter((c) => c._id !== card._id)
+      case 'reset': return []
+      default: return state
+    }
+  }
+  const [visibleCard, dispatch] = useReducer(reducer, initialArr)
+
   const switchBoxHandler = () => {
     if (checkboxOn === '') {
       setCheckboxOn('switchOn')
@@ -16,14 +33,53 @@ function SearchForm() {
     };
   }
 
+  const handleGetmoviesCard = useCallback(() => {
+    getAllMovies()
+      .then((cards) => {
+        setMoviesCardList(cards)
+      })
+      .catch((err) => { console.log(err) })
+  }, [moviesCardList])
+
+  useEffect(() => {
+    handleGetmoviesCard()
+  }, [])
+
+  const [searchInput, setSearchInput] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  const handleSearchInputChange = (evt) => {
+    setSearchInput(evt.target.value)
+  }
+
+  const findByName = (evt) => {
+    evt.preventDefault()
+    const name = searchInput.toLowerCase()
+    const findFieldList = [...moviesCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
+    findFieldList.length !== 0
+      ? (localStorage.setItem('searchList', JSON.stringify(findFieldList)),
+        updateSearchList(JSON.stringify(findFieldList)))
+      : (localStorage.setItem('searchList', ([])),
+        updateSearchList([]))
+    setSearchInput('')
+  }
+
+  useEffect(() => {
+    searchInput === ''
+      ? setFormValid(false)
+      : setFormValid(true)
+  }, [searchInput])
+
   return (
     <div className="searchForm__wrapper">
       <div className="searchForm__bar">
-        <form className="searchForm__form">
+        <form onSubmit={findByName} className="searchForm__form">
           <div className="search__forn-ico"></div>
-          <input name="search" placeholder="Фильм" type="search" className="searchForm__form-input"></input>
+          <input onChange={handleSearchInputChange} value={searchInput}
+            name="search" placeholder="Фильм" type="search" className="searchForm__form-input"></input>
+          <button onSubmit={findByName} type="submit" disabled={!formValid}
+            className={`searchForm__button ${!formValid && 'searchForm__button_invalid'}`}>Найти</button>
         </form>
-        <button className="searchForm__button">Найти</button>
       </div>
       <div className="searchForm__radio">
         <label>
@@ -32,7 +88,7 @@ function SearchForm() {
         </label>
         <p className="searchForm__radio-text">Короткометражки</p>
       </div>
-      {false &&
+      {showPreload &&
         <Preloader></Preloader>
       }
     </div>

@@ -7,9 +7,10 @@ import './MoviesCard.css';
 
 import unSaveImg from '../../../images/saveBDd.svg';
 import saveImg from '../../../images/save9BE.svg';
+import { likeMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCard({ cardName, cardDuration, cardImg }) {
+function MoviesCard({ card, savedCardList }) {
   const [saved, setSaved] = useState(false);
   const [showCross, setShowCross] = useState('false');
 
@@ -23,16 +24,30 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
-  const switchSaveIco = () => saved === false ? setSaved(true) : setSaved(false);
+  const switchSaveIco = () => {
+    likeMovies(card)
+    console.log(card)
+  }
 
-  const removeCard = () => console.log('card removed')
+  const handleSavedCheck = useCallback(() => {
+    function isPositive(item) {
+      return item.nameRU === card.nameRU;
+    }
+    savedCardList.some(isPositive)
+      ? setSaved(true)
+      : setSaved(false)
+  }, [saved]);
+
+  React.useEffect(() => {
+    handleSavedCheck();
+  }, []);
 
   return (
     <div className="moviesCard__wrapper">
       <div className="moviesCard__header">
         <div className="moviesCard__header-info">
-          <h3 className="moviesCard__header-name">{cardName}</h3>
-          <p className="moviesCard__header-duration">{cardDuration}</p>
+          <h3 className="moviesCard__header-name">{card.nameRU}</h3>
+          <p className="moviesCard__header-duration">{card.duration}</p>
         </div>
         {!showCross &&
           <button onClick={switchSaveIco} className="moviesCard__button moviesCard__button-save">
@@ -40,13 +55,13 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
           </button>
         }
         {showCross &&
-          <button onClick={removeCard} className="moviesCard__button moviesCard__button-cross">
+          <button className="moviesCard__button moviesCard__button-cross">
             <div className="moviesCard__button-cross-line"></div>
           </button>
         }
       </div>
       <div className="moviesCard__img-wrapper">
-        <img alt='Фильмы' className="moviesCard__img" src={cardImg}></img>
+        <img alt='Фильмы' className="moviesCard__img" src={!showCross ? `https://api.nomoreparties.co${card.image.url}` : card.image}></img>
       </div>
     </div >
   );

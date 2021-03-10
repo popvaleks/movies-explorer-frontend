@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useReducer, useCallback } from 'react';
 
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../../../vendor/preloader/Preloader';
 import film1 from '../../../images/cardImg/tiny/film1.jpg';
 import film2 from '../../../images/cardImg/tiny/film2.jpg';
 import film3 from '../../../images/cardImg/tiny/film3.jpg';
@@ -15,80 +16,67 @@ import film10 from '../../../images/cardImg/tiny/film10.jpg';
 import film11 from '../../../images/cardImg/tiny/film11.jpg';
 import film12 from '../../../images/cardImg/tiny/film12.jpg';
 
+import { getAllMovies } from '../../../utils/MoviesApi'
 
-function MoviesCardList() {
+
+function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList }) {
+  // const [moviesCardList, setMoviesCardList] = useState([]);
+  // const [notFound, setNotFound] = useState(false)
+
+  // const findList = localStorage.getItem('searchList')
+
+  // const handleGetmoviesCard = useCallback(() => {
+  //   console.log(findList.length)
+  //   debugger
+  //   console.log(searchList.length)
+  //   debugger
+  //   findList.length !== 0
+  //     ? setMoviesCardList(JSON.parse(findList))
+  //     : setNotFound(true)
+  //   console.log(searchList)
+  //   debugger
+  // }, [searchList])
+
+  // useEffect(() => {
+  //   handleGetmoviesCard()
+  // }, [])
+
+  // const findByName = (name) => {
+  //   moviesCardList.forEach((item) => {
+  //     if (item.includes(name) === true) {
+  //       dispatch('increment')
+  //       console.log(visibleCard)
+  //     }
+  //   })
+  // }
   return (
     <div className="movies-cardList__wrapper">
-      <div className="movies-cardList__content">
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film1}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film2}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film3}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film4}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film5}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film6}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film7}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film8}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film9}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film10}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film11}
-        ></MoviesCard>
-        <MoviesCard
-          cardName={'33 слова о дизайне'}
-          cardDuration={'1ч 47м'}
-          cardImg={film12}
-        ></MoviesCard>
-      </div>
-      <div className="movies-cardList__more">
-        <button className="movies-cardList__more-button">
-          <p className="movies-cardList__more-button-text">Еще</p>
-        </button>
-      </div>
-      {false && <div className="movies-cardList__not-found">
-        {`К сожалению, ни чего не найдено (`}
-      </div>}
+      {moviesCardList.length !== 0
+        ?
+        <div>
+          <div className="movies-cardList__content">
+            {moviesCardList.map((item) => {
+              return (
+                <MoviesCard
+                  savedCardList={savedCardList}
+                  card={item}
+                  key={prefix === true ? item.id : item._id} />)
+            })}
+          </div>
+          <div className="movies-cardList__more">
+            <button onClick={() => console.log(moviesCardList[0].nameRU)} className="movies-cardList__more-button">
+              <p className="movies-cardList__more-button-text">Еще</p>
+            </button>
+          </div>
+        </div>
+        : notFound !== true
+          ?
+          <Preloader></Preloader>
+          :
+          <div className="movies-cardList__not-found">
+            {`К сожалению, ни чего не найдено (`}
+          </div>
+      }
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
@@ -24,7 +24,7 @@ const log = true;
 function App() {
   const [landingHeader, setLandigHeader] = useState(true)
   const [wrapperHeight, setWrapperHeight] = useState('default')
-  const [currentUser, setCurrentUser] = React.useState({
+  const [currentUser, setCurrentUser] = useState({
     name: '', film: [], email: '', _id: ''
   })
   const [loggedIn, setLoggedIn] = useState(false)
@@ -60,7 +60,7 @@ function App() {
       : setLandigHeader(false)
   }, [location.pathname]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleRouteCheck();
     handleWrapperHeight();
     handleErrorPageCheck();
@@ -129,9 +129,10 @@ function App() {
       console.log('not logined')
     }
   }
-  React.useEffect(() => {
+  useEffect(() => {
     handleTokenCheck();
   }, [])
+
 
   return (
     < CurrentUserContext.Provider value={currentUser} >
@@ -168,10 +169,10 @@ function App() {
                 subtitleLink='Регистрация'
                 subtitleLinkRoute='sign-up'
               />
-              <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}>
-              </ProtectedRoute>
-              <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={loggedIn}>
-              </ProtectedRoute>
+              <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}
+              />
+              <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={loggedIn}
+              />
               <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile" />
               <ProtectedRoute loggedIn={loggedIn} component={Auth} path="/edit-profile"
                 upDateUserInfo={upDateUserInfo}

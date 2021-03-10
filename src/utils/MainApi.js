@@ -1,7 +1,6 @@
 export const BASE_URL = 'http://localhost:3001'
 //export const BASE_URL = 'https://api.popvaleks.students.nomoreparties.xyz'
 
-// import { getCookie } from '../helpers/cookieHandler'
 class ErrorApiCodeHandler extends Error {
   constructor(code = 500, message = '', ...args) {
     super(message, ...args)
