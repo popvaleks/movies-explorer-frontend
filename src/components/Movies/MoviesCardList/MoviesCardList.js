@@ -19,7 +19,7 @@ import film12 from '../../../images/cardImg/tiny/film12.jpg';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList }) {
+function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList, switchSaveIco1 }) {
   // const [moviesCardList, setMoviesCardList] = useState([]);
   // const [notFound, setNotFound] = useState(false)
 
@@ -60,7 +60,9 @@ function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList }) {
                 <MoviesCard
                   savedCardList={savedCardList}
                   card={item}
-                  key={prefix === true ? item.id : item._id} />)
+                  key={prefix === true ? item.id : item._id}
+                  switchSaveIco1={switchSaveIco1}
+                />)
             })}
           </div>
           <div className="movies-cardList__more">

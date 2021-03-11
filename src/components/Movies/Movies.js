@@ -4,6 +4,8 @@ import './Movies.css';
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import { getMyMovies } from '../../utils/MoviesApi';
+import { saveMovies } from '../..//utils/MoviesApi'
+import { unsaveMovies } from '../../utils/MoviesApi'
 
 function Movies({ }) {
   const [searchList, setSearchList] = useState([])
@@ -11,7 +13,7 @@ function Movies({ }) {
   const [notFound, setNotFound] = useState(false)
   const [savedCardList, setSavedCardList] = useState([])
 
-  const handleGetSavedsCard = useCallback(() => {
+  const refreshMovies = () => {
     getMyMovies()
       .then((cards) => {
         cards.message === 'Список фильмов отсутствует'
@@ -19,6 +21,10 @@ function Movies({ }) {
           : setSavedCardList(cards)
       })
       .catch((err) => { console.log(err) })
+  }
+
+  const handleGetSavedsCard = useCallback(() => {
+    refreshMovies()
   }, [savedCardList])
 
   useEffect(() => {
@@ -42,6 +48,28 @@ function Movies({ }) {
     handleGetmoviesCard()
   }, [searchList])
 
+  const switchSaveIco = (card, saved) => {
+    if (saved === true) {
+      savedCardList.map((item) => {
+        if (item.nameRU === card.nameRU) {
+          unsaveMovies(item._id)
+            .then(() => {
+              refreshMovies()
+            })
+            .catch((err) => { console.log(err) })
+        } else {
+          return
+        }
+      })
+    } else {
+      saveMovies(card)
+        .then(() => {
+          refreshMovies()
+        })
+        .catch((err) => { console.log(err) })
+    }
+  }
+
   return (
     <div className="movies__wrapper">
       <SearchForm
@@ -53,6 +81,7 @@ function Movies({ }) {
           savedCardList={savedCardList}
           notFound={notFound}
           prefix={true}
+          switchSaveIco1={switchSaveIco}
         />}
     </div >
   );

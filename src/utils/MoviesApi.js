@@ -23,7 +23,7 @@ export const getMyMovies = () => {
     .then(data => data)
 }
 
-export const likeMovies = (data) => {
+export const saveMovies = (data) => {
   const link = `https://api.nomoreparties.co${data.image.url}`
   const linkThumbnail = `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`
   return fetch(`http://localhost:3001/movies`, {
@@ -49,6 +49,26 @@ export const likeMovies = (data) => {
   })
     .then((res) => {
       if (res.ok && res.status !== 204) { // no content
+        return res.json()
+      } else {
+        return Promise.reject(
+          new ErrorApiCodeHandler(res.status, `Ошибка: ${res.status} (${res.statusText})`),
+        )
+      }
+    })
+}
+
+export const unsaveMovies = (id) => {
+  return fetch(`http://localhost:3001/movies/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  })
+    .then((res) => {
+      if (res.ok && res.status !== 204) {
         return res.json()
       } else {
         return Promise.reject(

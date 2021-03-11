@@ -7,10 +7,11 @@ import './MoviesCard.css';
 
 import unSaveImg from '../../../images/saveBDd.svg';
 import saveImg from '../../../images/save9BE.svg';
-import { likeMovies } from '../../../utils/MoviesApi'
+import { saveMovies } from '../../../utils/MoviesApi'
+import { unsaveMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCard({ card, savedCardList }) {
+function MoviesCard({ card, savedCardList, switchSaveIco1 }) {
   const [saved, setSaved] = useState(false);
   const [showCross, setShowCross] = useState('false');
 
@@ -25,22 +26,62 @@ function MoviesCard({ card, savedCardList }) {
   }, [handleRouteCheck]);
 
   const switchSaveIco = () => {
-    likeMovies(card)
-    console.log(card)
+    switchSaveIco1(card, saved)
+    saved === true ? setSaved(false) : setSaved(true);
   }
 
-  const handleSavedCheck = useCallback(() => {
-    function isPositive(item) {
-      return item.nameRU === card.nameRU;
+  const handleSavedCheck = () => {
+    if (savedCardList.message !== "Список фильмов отсутствует") {
+      function isPositive(item) {
+        return item.nameRU === card.nameRU;
+      }
+      savedCardList.some(isPositive)
+        ? setSaved(true)
+        : setSaved(false)
     }
-    savedCardList.some(isPositive)
-      ? setSaved(true)
-      : setSaved(false)
-  }, [saved]);
+  }
 
   React.useEffect(() => {
-    handleSavedCheck();
+    if (location.pathname === '/movies') {
+      handleSavedCheck(card);
+    }
+    handleSavedCheck()
   }, []);
+
+  // const switchSaveIco = () => {
+  //   saveMovies(card)
+  //   console.log(card)
+  // }
+
+  // const switchSaveIco = () => {
+  //   if (saved === true) {
+  //     savedCardList.map((item) => {
+  //       if (item.nameRU === card.nameRU) {
+  //         unsaveMovies(item._id)
+  //           .then(setSaved(false))
+  //           .catch((err) => { console.log(err) })
+  //       } else {
+  //         return
+  //       }
+  //     })
+  //   } else {
+  //     saveMovies(card)
+  //       .then(setSaved(true))
+  //       .catch((err) => { console.log(err) })
+  //   }
+  // }
+
+
+  // const handleSavedCheck = useCallback(() => {
+  //   if (savedCardList.message !== "Список фильмов отсутствует") {
+  //     function isPositive(item) {
+  //       return item.nameRU === card.nameRU;
+  //     }
+  //     savedCardList.some(isPositive)
+  //       ? setSaved(true)
+  //       : setSaved(false)
+  //   }
+  // }, [saved]);
 
   return (
     <div className="moviesCard__wrapper">
