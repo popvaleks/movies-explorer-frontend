@@ -11,7 +11,7 @@ import { saveMovies } from '../../../utils/MoviesApi'
 import { unsaveMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCard({ card, savedCardList, switchSaveIco1 }) {
+function MoviesCard({ card, savedCardList, handleChangeSave }) {
   const [saved, setSaved] = useState(false);
   const [showCross, setShowCross] = useState('false');
 
@@ -26,8 +26,12 @@ function MoviesCard({ card, savedCardList, switchSaveIco1 }) {
   }, [handleRouteCheck]);
 
   const switchSaveIco = () => {
-    switchSaveIco1(card, saved)
+    handleChangeSave(card, saved)
     saved === true ? setSaved(false) : setSaved(true);
+  }
+
+  const removeCard = () => {
+    handleChangeSave(card)
   }
 
   const handleSavedCheck = () => {
@@ -96,13 +100,22 @@ function MoviesCard({ card, savedCardList, switchSaveIco1 }) {
           </button>
         }
         {showCross &&
-          <button className="moviesCard__button moviesCard__button-cross">
+          <button onClick={removeCard} className="moviesCard__button moviesCard__button-cross">
             <div className="moviesCard__button-cross-line"></div>
           </button>
         }
       </div>
       <div className="moviesCard__img-wrapper">
-        <img alt='Фильмы' className="moviesCard__img" src={!showCross ? `https://api.nomoreparties.co${card.image.url}` : card.image}></img>
+        <img alt='Фильмы' className="moviesCard__img"
+          src={
+            !showCross
+              ? (
+                card.image !== null
+                ? `https://api.nomoreparties.co${card.image.url}`
+                : `https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg`)
+              : card.image}>
+
+        </img>
       </div>
     </div >
   );

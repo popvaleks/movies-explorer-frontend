@@ -24,8 +24,6 @@ export const getMyMovies = () => {
 }
 
 export const saveMovies = (data) => {
-  const link = `https://api.nomoreparties.co${data.image.url}`
-  const linkThumbnail = `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`
   return fetch(`http://localhost:3001/movies`, {
     method: 'POST',
     credentials: 'include',
@@ -41,9 +39,9 @@ export const saveMovies = (data) => {
       duration: data.duration,
       year: data.year,
       description: data.description,
-      image: link,
+      image: data.image !== null ? `https://api.nomoreparties.co${data.image.url}` : 'https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg',
       trailer: data.trailerLink,
-      thumbnail: linkThumbnail,
+      thumbnail: data.image !== null ? `https://api.nomoreparties.co${data.image.formats.thumbnail.url}` : 'https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg',
       movieId: data.id,
     }),
   })

@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './Saved.css';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import SearchForm from '../Movies/SearchForm/SearchForm';
-import { getMyMovies } from '../../utils/MoviesApi';
+import { getMyMovies, unsaveMovies } from '../../utils/MoviesApi';
 
 function Saved({ }) {
   const [searchList, setSearchList] = useState([])
@@ -31,6 +31,12 @@ function Saved({ }) {
     setSearchList(content)
   }
 
+  const handleChangeSave = (item) => {
+    unsaveMovies(item._id)
+      .then(setSavedCardList(savedCardList.filter((i) => i._id !== item._id)))
+      .catch((err) => { console.log(err) })
+  }
+
   return (
     <div className="movies__wrapper">
       <SearchForm
@@ -41,6 +47,7 @@ function Saved({ }) {
         savedCardList={savedCardList}
         notFound={notFound}
         prefix={false}
+        handleChangeSave={handleChangeSave}
       />
     </div >
   );

@@ -29,17 +29,18 @@ function Movies({ }) {
 
   useEffect(() => {
     handleGetSavedsCard()
+    setSearchList(localStorage.getItem('searchList'))
   }, [])
 
   const updateSearchList = (content) => {
     setSearchList(content)
   }
 
-  const findList = localStorage.getItem('searchList')
+  // const findList = localStorage.getItem('searchList')
 
   const handleGetmoviesCard = useCallback(() => {
-    findList.length !== 0
-      ? setMoviesCardList(JSON.parse(findList))
+    searchList.length !== 0
+      ? setMoviesCardList(JSON.parse(searchList))
       : (setMoviesCardList([]),
         setNotFound(true))
   }, [searchList])
@@ -48,7 +49,7 @@ function Movies({ }) {
     handleGetmoviesCard()
   }, [searchList])
 
-  const switchSaveIco = (card, saved) => {
+  const handleChangeSave = (card, saved) => {
     if (saved === true) {
       savedCardList.map((item) => {
         if (item.nameRU === card.nameRU) {
@@ -81,7 +82,7 @@ function Movies({ }) {
           savedCardList={savedCardList}
           notFound={notFound}
           prefix={true}
-          switchSaveIco1={switchSaveIco}
+          handleChangeSave={handleChangeSave}
         />}
     </div >
   );
