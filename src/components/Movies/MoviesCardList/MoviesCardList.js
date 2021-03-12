@@ -19,7 +19,7 @@ import film12 from '../../../images/cardImg/tiny/film12.jpg';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList, handleChangeSave }) {
+function MoviesCardList({ switchBoxEnable, setSwitchBoxEnable, moviesCardList, notFound, prefix, savedCardList, handleChangeSave }) {
   // const [moviesCardList, setMoviesCardList] = useState([]);
   // const [notFound, setNotFound] = useState(false)
 
@@ -48,10 +48,11 @@ function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList, handl
   //       console.log(visibleCard)
   //     }
   //   })
-  // }
+  // } && switchBoxEnable === false
+
   return (
     <div className="movies-cardList__wrapper">
-      {moviesCardList.length !== 0
+      {moviesCardList.length !== 0 && moviesCardList !== false
         ?
         <div>
           <div className="movies-cardList__content">
@@ -62,6 +63,7 @@ function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList, handl
                   card={item}
                   key={prefix === true ? item.id : item._id}
                   handleChangeSave={handleChangeSave}
+                  setSwitchBox={setSwitchBoxEnable}
                 />)
             })}
           </div>
@@ -76,7 +78,7 @@ function MoviesCardList({ moviesCardList, notFound, prefix, savedCardList, handl
           <Preloader></Preloader>
           :
           <div className="movies-cardList__not-found">
-            {`К сожалению, ни чего не найдено (`}
+            К сожалению, ни чего не найдено ( <br /> обновите страницу
           </div>
       }
     </div>

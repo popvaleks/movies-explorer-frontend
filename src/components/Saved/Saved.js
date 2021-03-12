@@ -9,6 +9,9 @@ function Saved({ }) {
   const [searchList, setSearchList] = useState([])
   const [savedCardList, setSavedCardList] = useState([])
   const [notFound, setNotFound] = useState(false)
+  const [switchBoxEnable, setSwitchBoxEnable] = useState(false)
+  const [shortMovesCardList, setShortMovesCardList] = useState([])
+  const [shortSearchList, setShortSearchList] = useState([])
 
   const handleGetSavedsCard = useCallback(() => {
     getMyMovies()
@@ -25,25 +28,77 @@ function Saved({ }) {
 
   useEffect(() => {
     handleGetSavedsCard()
+    setSearchList([])
   }, [])
 
   const updateSearchList = (content) => {
-    setSearchList(content)
+    if (content === "notFound") {
+      setNotFound(true)
+    } else if (switchBoxEnable) {
+      setSearchList(content)
+      setShortSearchList(content.filter((i) => i.duration < 41))
+      if (content.filter((i) => i.duration < 41).length === 0) {
+        setNotFound(true)
+      } else {
+        setNotFound(false)
+      }
+    } else {
+      setSearchList(content)
+      setNotFound(false)
+    }
   }
 
   const handleChangeSave = (item) => {
     unsaveMovies(item._id)
-      .then(setSavedCardList(savedCardList.filter((i) => i._id !== item._id)))
+      .then(() => {
+        setSavedCardList(savedCardList.filter((i) => i._id !== item._id))
+        if (searchList.length !== 0) {
+          setSearchList(searchList.filter((i) => i._id !== item._id))
+          if (switchBoxEnable) {
+            setShortSearchList(shortSearchList.filter((i) => i._id !== item._id))
+            if (shortSearchList.filter((i) => i._id !== item._id).length === 0) {
+              setNotFound(true)
+            }
+          }
+        }
+      })
       .catch((err) => { console.log(err) })
+  }
+
+  const handleSwitchBox = (arg) => {
+    if (arg === true) {
+      searchList.length !== 0
+        ? setShortSearchList(searchList.filter((i) => i.duration < 41))
+        : setShortMovesCardList(savedCardList.filter((i) => i.duration < 41))
+      if (searchList.length !== 0 && searchList.filter((i) => i.duration < 41).length === 0) {
+        setNotFound(true)
+      }
+      setSwitchBoxEnable(true)
+    } else {
+      setShortMovesCardList([])
+      setShortSearchList([])
+      setSwitchBoxEnable(false)
+    }
   }
 
   return (
     <div className="movies__wrapper">
       <SearchForm
         updateSearchList={updateSearchList}
+        savedCardList={savedCardList}
+        prefix={false}
+        setSwitchBox={handleSwitchBox}
       />
       <MoviesCardList
-        moviesCardList={savedCardList}
+        moviesCardList={
+          notFound ? false :
+            searchList.length === 0 && !switchBoxEnable ? savedCardList :
+              searchList.length === 0 && switchBoxEnable ? shortMovesCardList :
+                searchList.length !== 0 && !switchBoxEnable ? searchList :
+                  searchList.length !== 0 && switchBoxEnable ? shortSearchList :
+                    shortSearchList.length === 0 && switchBoxEnable ? false :
+                      false
+        }
         savedCardList={savedCardList}
         notFound={notFound}
         prefix={false}

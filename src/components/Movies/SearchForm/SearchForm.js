@@ -4,32 +4,22 @@ import './SearchForm.css';
 import Preloader from '../../../vendor/preloader/Preloader';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
-function SearchForm({ updateSearchList }) {
+function SearchForm({ updateSearchList, prefix, savedCardList, setSwitchBox }) {
   const [checkboxOn, setCheckboxOn] = useState('')
   const [bgcToogle, setBGCToogle] = useState('')
 
   const [moviesCardList, setMoviesCardList] = useState([])
   const [showPreload, setShowPreload] = useState(false)
 
-  const initialArr = []
-  const reducer = (state, action, card) => {
-    switch (action) {
-      case 'increment': return state.push(card);
-      case 'like': return state.filter((c) => c._id !== card._id)
-      case 'disLike': return state.filter((c) => c._id !== card._id)
-      case 'reset': return []
-      default: return state
-    }
-  }
-  const [visibleCard, dispatch] = useReducer(reducer, initialArr)
-
   const switchBoxHandler = () => {
     if (checkboxOn === '') {
       setCheckboxOn('switchOn')
       setBGCToogle('switchColor')
+      setSwitchBox(true)
     } else {
       setCheckboxOn('')
       setBGCToogle('')
+      setSwitchBox(false)
     };
   }
 
@@ -55,13 +45,21 @@ function SearchForm({ updateSearchList }) {
   const findByName = (evt) => {
     evt.preventDefault()
     const name = searchInput.toLowerCase()
-    const findFieldList = [...moviesCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
-    findFieldList.length !== 0
-      ? (localStorage.setItem('searchList', JSON.stringify(findFieldList)),
-        updateSearchList(JSON.stringify(findFieldList)))
-      : (localStorage.setItem('searchList', ([])),
-        updateSearchList([]))
-    setSearchInput('')
+    if (prefix) {
+      const findFieldList = [...moviesCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
+      findFieldList.length !== 0
+        ? (localStorage.setItem('searchList', JSON.stringify(findFieldList)),
+          updateSearchList(JSON.stringify(findFieldList)))
+        : (localStorage.setItem('searchList', ([])),
+          updateSearchList([]))
+      setSearchInput('')
+    } else {
+      const findFieldList = [...savedCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
+      findFieldList.length !== 0
+        ? updateSearchList(findFieldList)
+        : updateSearchList('notFound')
+      setSearchInput('')
+    }
   }
 
   useEffect(() => {

@@ -112,7 +112,7 @@ function MoviesCard({ card, savedCardList, handleChangeSave }) {
               ? (
                 card.image !== null
                 ? `https://api.nomoreparties.co${card.image.url}`
-                : `https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg`)
+                : `https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158`)
               : card.image}>
 
         </img>

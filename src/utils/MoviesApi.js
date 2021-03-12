@@ -24,6 +24,7 @@ export const getMyMovies = () => {
 }
 
 export const saveMovies = (data) => {
+  const defaulImg = 'https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158'
   return fetch(`http://localhost:3001/movies`, {
     method: 'POST',
     credentials: 'include',
@@ -39,9 +40,9 @@ export const saveMovies = (data) => {
       duration: data.duration,
       year: data.year,
       description: data.description,
-      image: data.image !== null ? `https://api.nomoreparties.co${data.image.url}` : 'https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg',
+      image: data.image !== null ? `https://api.nomoreparties.co${data.image.url}` : defaulImg,
       trailer: data.trailerLink,
-      thumbnail: data.image !== null ? `https://api.nomoreparties.co${data.image.formats.thumbnail.url}` : 'https://api.nomoreparties.co/uploads/750x485_28d08c49c4.jpeg',
+      thumbnail: data.image !== null ? `https://api.nomoreparties.co${data.image.formats.thumbnail.url}` : defaulImg,
       movieId: data.id,
     }),
   })

@@ -12,6 +12,8 @@ function Movies({ }) {
   const [moviesCardList, setMoviesCardList] = useState([]);
   const [notFound, setNotFound] = useState(false)
   const [savedCardList, setSavedCardList] = useState([])
+  const [switchBoxEnable, setSwitchBoxEnable] = useState(false)
+  const [shortMovesCardList, setShortMovesCardList] = useState([])
 
   const refreshMovies = () => {
     getMyMovies()
@@ -27,26 +29,17 @@ function Movies({ }) {
     refreshMovies()
   }, [savedCardList])
 
-  useEffect(() => {
-    handleGetSavedsCard()
-    setSearchList(localStorage.getItem('searchList'))
-  }, [])
-
   const updateSearchList = (content) => {
     setSearchList(content)
   }
 
-  // const findList = localStorage.getItem('searchList')
-
   const handleGetmoviesCard = useCallback(() => {
     searchList.length !== 0
-      ? setMoviesCardList(JSON.parse(searchList))
+      ? (setMoviesCardList(JSON.parse(searchList)),
+        setShortMovesCardList(JSON.parse(searchList).filter((i) => i.duration < 41)))
       : (setMoviesCardList([]),
+        setShortMovesCardList([]),
         setNotFound(true))
-  }, [searchList])
-
-  useEffect(() => {
-    handleGetmoviesCard()
   }, [searchList])
 
   const handleChangeSave = (card, saved) => {
@@ -71,18 +64,41 @@ function Movies({ }) {
     }
   }
 
+  const handleSwitchBox = (arg) => {
+    if (arg === true) {
+      setSwitchBoxEnable(true)
+    } else {
+      setSwitchBoxEnable(false)
+    }
+  }
+
+  useEffect(() => {
+    handleGetmoviesCard()
+  }, [searchList])
+
+  useEffect(() => {
+    handleGetSavedsCard()
+    setSearchList(localStorage.getItem('searchList'))
+  }, [])
+
   return (
     <div className="movies__wrapper">
       <SearchForm
         updateSearchList={updateSearchList}
+        prefix={true}
+        setSwitchBox={handleSwitchBox}
       />
       {savedCardList.length !== 0 &&
         <MoviesCardList
-          moviesCardList={moviesCardList}
+          moviesCardList={
+            !switchBoxEnable ? moviesCardList :
+              switchBoxEnable && shortMovesCardList.length !== 0 ? shortMovesCardList :
+                false}
           savedCardList={savedCardList}
           notFound={notFound}
           prefix={true}
           handleChangeSave={handleChangeSave}
+          switchBoxEnable={switchBoxEnable}
         />}
     </div >
   );
