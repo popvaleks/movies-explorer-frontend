@@ -7,7 +7,13 @@ import { getMyMovies } from '../../utils/MoviesApi';
 import { saveMovies } from '../..//utils/MoviesApi'
 import { unsaveMovies } from '../../utils/MoviesApi'
 
-function Movies({ }) {
+function Movies({
+  addCardOnScreen,
+  errorServer,
+  handleServerError,
+  cardOnPage,
+  setDefaultCardOnPage
+}) {
   const [searchList, setSearchList] = useState([])
   const [moviesCardList, setMoviesCardList] = useState([]);
   const [notFound, setNotFound] = useState(false)
@@ -78,7 +84,7 @@ function Movies({ }) {
 
   useEffect(() => {
     handleGetSavedsCard()
-    setSearchList(localStorage.getItem('searchList'))
+    setSearchList(localStorage.getItem('searchList') || [])
   }, [])
 
   return (
@@ -87,6 +93,8 @@ function Movies({ }) {
         updateSearchList={updateSearchList}
         prefix={true}
         setSwitchBox={handleSwitchBox}
+        setDefaultCardOnPage={setDefaultCardOnPage}
+        handleServerError={handleServerError}
       />
       {savedCardList.length !== 0 &&
         <MoviesCardList
@@ -99,6 +107,9 @@ function Movies({ }) {
           prefix={true}
           handleChangeSave={handleChangeSave}
           switchBoxEnable={switchBoxEnable}
+          cardOnPage={cardOnPage}
+          addCardOnScreen={addCardOnScreen}
+          errorServer={errorServer}
         />}
     </div >
   );

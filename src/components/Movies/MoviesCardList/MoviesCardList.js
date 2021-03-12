@@ -19,7 +19,7 @@ import film12 from '../../../images/cardImg/tiny/film12.jpg';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
 
-function MoviesCardList({ switchBoxEnable, setSwitchBoxEnable, moviesCardList, notFound, prefix, savedCardList, handleChangeSave }) {
+function MoviesCardList({ errorServer, addCardOnScreen, setAddCardOnPage, cardOnPage, setSwitchBoxEnable, moviesCardList, notFound, prefix, savedCardList, handleChangeSave }) {
   // const [moviesCardList, setMoviesCardList] = useState([]);
   // const [notFound, setNotFound] = useState(false)
 
@@ -49,6 +49,19 @@ function MoviesCardList({ switchBoxEnable, setSwitchBoxEnable, moviesCardList, n
   //     }
   //   })
   // } && switchBoxEnable === false
+  const [addOnPageAddButton, setAddOnPageAddButton] = useState(false);
+
+  const handleClickAddButton = () => {
+    addCardOnScreen()
+  }
+
+  useEffect(() => {
+    if (moviesCardList.length > cardOnPage) {
+      setAddOnPageAddButton(true)
+    } else {
+      setAddOnPageAddButton(false)
+    }
+  }, [cardOnPage, moviesCardList])
 
   return (
     <div className="movies-cardList__wrapper">
@@ -56,21 +69,24 @@ function MoviesCardList({ switchBoxEnable, setSwitchBoxEnable, moviesCardList, n
         ?
         <div>
           <div className="movies-cardList__content">
-            {moviesCardList.map((item) => {
-              return (
-                <MoviesCard
-                  savedCardList={savedCardList}
-                  card={item}
-                  key={prefix === true ? item.id : item._id}
-                  handleChangeSave={handleChangeSave}
-                  setSwitchBox={setSwitchBoxEnable}
-                />)
+            {moviesCardList.map((item, index) => {
+              if (index < cardOnPage) {
+                return (
+                  <MoviesCard
+                    savedCardList={savedCardList}
+                    card={item}
+                    key={prefix === true ? item.id : item._id}
+                    handleChangeSave={handleChangeSave}
+                    setSwitchBox={setSwitchBoxEnable}
+                  />)
+              }
             })}
           </div>
           <div className="movies-cardList__more">
-            <button onClick={() => console.log(moviesCardList[0].nameRU)} className="movies-cardList__more-button">
-              <p className="movies-cardList__more-button-text">Еще</p>
-            </button>
+            {addOnPageAddButton &&
+              <button onClick={handleClickAddButton} className="movies-cardList__more-button">
+                <p className="movies-cardList__more-button-text">Еще</p>
+              </button>}
           </div>
         </div>
         : notFound !== true
@@ -78,7 +94,10 @@ function MoviesCardList({ switchBoxEnable, setSwitchBoxEnable, moviesCardList, n
           <Preloader></Preloader>
           :
           <div className="movies-cardList__not-found">
-            К сожалению, ни чего не найдено ( <br /> обновите страницу
+            {errorServer
+              ? 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+              : 'Ничего не найдено'
+            }
           </div>
       }
     </div>

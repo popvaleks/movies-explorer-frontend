@@ -19,7 +19,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import { getCookie } from '../../utils/cookieHandler'
 import * as auth from '../../utils/MainApi';
 
-const log = true;
+const log = false;
 
 function App() {
   const [landingHeader, setLandigHeader] = useState(true)
@@ -82,36 +82,6 @@ function App() {
       .catch((err) => { console.log(err) })
   }, [currentUser])
 
-  // const handleTokenCheck = () => {
-  //   const jwt = getCookie('jwt')
-  //   const path = location.pathname;
-  //   if (jwt) {
-  //     setLoggedIn(true);
-  //     uploadUserInfo();
-  //     console.log(currentUser)
-  //   }
-  // }
-
-  // const handleTokenCheck = useCallback(() => {
-  //   const jwt = getCookie('jwt')
-  //   const path = location.pathname;
-  //   if (jwt) {
-  //     setLoggedIn(true);
-  //     console.log(loggedIn)
-  //     uploadUserInfo();
-  //     console.log('itsWorked')
-  //   } else {
-  //     setLoggedIn(false);
-  //     setCurrentUser('');
-  //     console.log('not logined')
-  //   }
-  // }, [loggedIn]);
-
-  // React.useEffect(() => {
-  //   handleTokenCheck();
-  //   // eslint-disable-next-line
-  // }, [loggedIn]);
-
   const logoUt = () => {
     setLoggedIn(false);
   }
@@ -132,6 +102,29 @@ function App() {
   useEffect(() => {
     handleTokenCheck();
   }, [])
+
+  const [cardOnPage, setCardOnPage] = useState();
+  const { innerWidth: width, innerHeight: height } = window;
+
+  const setDefaultCardOnPage = () => {
+    setCardOnPage(
+      window.innerWidth > 1200 ? 12 :
+        window.innerWidth > 765 ? 8 : 5)
+  }
+
+  const addCardOnScreen = () => {
+    setCardOnPage(cardOnPage + (window.innerWidth > 1200 ? 3 : 2))
+  }
+
+  const [errorServer, setErrorServer] = useState(false)
+
+  const handleServerError = (arg) => {
+    setErrorServer(arg)
+  }
+
+  useEffect(() => {
+    setDefaultCardOnPage();
+  }, [location.pathname])
 
 
   return (
@@ -170,8 +163,18 @@ function App() {
                 subtitleLinkRoute='sign-up'
               />
               <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}
+                cardOnPage={cardOnPage}
+                addCardOnScreen={addCardOnScreen}
+                setDefaultCardOnPage={setDefaultCardOnPage}
+                errorServer={errorServer}
+                handleServerError={handleServerError}
               />
               <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={loggedIn}
+                cardOnPage={cardOnPage}
+                addCardOnScreen={addCardOnScreen}
+                setDefaultCardOnPage={setDefaultCardOnPage}
+                errorServer={errorServer}
+                handleServerError={handleServerError}
               />
               <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile" />
               <ProtectedRoute loggedIn={loggedIn} component={Auth} path="/edit-profile"

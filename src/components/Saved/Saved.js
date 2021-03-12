@@ -5,7 +5,13 @@ import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import SearchForm from '../Movies/SearchForm/SearchForm';
 import { getMyMovies, unsaveMovies } from '../../utils/MoviesApi';
 
-function Saved({ }) {
+function Saved({
+  addCardOnScreen,
+  errorServer,
+  handleServerError,
+  cardOnPage,
+  setDefaultCardOnPage
+}) {
   const [searchList, setSearchList] = useState([])
   const [savedCardList, setSavedCardList] = useState([])
   const [notFound, setNotFound] = useState(false)
@@ -65,21 +71,59 @@ function Saved({ }) {
       .catch((err) => { console.log(err) })
   }
 
+  const notFoundCheck = () => {
+    savedCardList.length === 0 ? setNotFound(true) : setNotFound(false)
+  }
+
+  useEffect(() => {
+    notFoundCheck()
+  }, [savedCardList.length])
+
   const handleSwitchBox = (arg) => {
     if (arg === true) {
-      searchList.length !== 0
-        ? setShortSearchList(searchList.filter((i) => i.duration < 41))
-        : setShortMovesCardList(savedCardList.filter((i) => i.duration < 41))
-      if (searchList.length !== 0 && searchList.filter((i) => i.duration < 41).length === 0) {
-        setNotFound(true)
+      if (searchList.length !== 0) {
+        if (searchList.filter((i) => i.duration < 41).length === 0) {
+          setNotFound(true)
+        } else {
+          setShortSearchList(searchList.filter((i) => i.duration < 41))
+          setNotFound(false)
+        }
+      } else {
+        if (savedCardList.filter((i) => i.duration < 41).length === 0) {
+          setNotFound(true)
+        } else {
+          setShortMovesCardList(savedCardList.filter((i) => i.duration < 41))
+          setNotFound(false)
+        }
       }
       setSwitchBoxEnable(true)
     } else {
       setShortMovesCardList([])
       setShortSearchList([])
+      setSearchList([])
       setSwitchBoxEnable(false)
+      notFoundCheck()
     }
   }
+
+  // const handleSwitchBox = (arg) => {
+  //   if (arg === true) {
+  //     searchList.length !== 0
+  //       ? setShortSearchList(searchList.filter((i) => i.duration < 41))
+  //       : setShortMovesCardList(savedCardList.filter((i) => i.duration < 41))
+  //     if (searchList.length !== 0 && searchList.filter((i) => i.duration < 41).length === 0) {
+  //       setNotFound(true)
+  //     }
+  //     if (savedCardList.length !== 0 && savedCardList.filter((i) => i.duration < 41).length === 0) {
+  //       setNotFound(true)
+  //     }
+  //     setSwitchBoxEnable(true)
+  //   } else {
+  //     setShortMovesCardList([])
+  //     setShortSearchList([])
+  //     setSwitchBoxEnable(false)
+  //   }
+  // }
 
   return (
     <div className="movies__wrapper">
@@ -88,6 +132,8 @@ function Saved({ }) {
         savedCardList={savedCardList}
         prefix={false}
         setSwitchBox={handleSwitchBox}
+        setDefaultCardOnPage={setDefaultCardOnPage}
+        handleServerError={handleServerError}
       />
       <MoviesCardList
         moviesCardList={
@@ -103,6 +149,9 @@ function Saved({ }) {
         notFound={notFound}
         prefix={false}
         handleChangeSave={handleChangeSave}
+        cardOnPage={cardOnPage}
+        addCardOnScreen={addCardOnScreen}
+        errorServer={errorServer}
       />
     </div >
   );

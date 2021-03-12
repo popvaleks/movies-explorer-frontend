@@ -4,7 +4,13 @@ import './SearchForm.css';
 import Preloader from '../../../vendor/preloader/Preloader';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
-function SearchForm({ updateSearchList, prefix, savedCardList, setSwitchBox }) {
+function SearchForm({
+  handleServerError,
+  setDefaultCardOnPage,
+  updateSearchList,
+  prefix,
+  savedCardList,
+  setSwitchBox }) {
   const [checkboxOn, setCheckboxOn] = useState('')
   const [bgcToogle, setBGCToogle] = useState('')
 
@@ -27,8 +33,9 @@ function SearchForm({ updateSearchList, prefix, savedCardList, setSwitchBox }) {
     getAllMovies()
       .then((cards) => {
         setMoviesCardList(cards)
+        handleServerError(false)
       })
-      .catch((err) => { console.log(err) })
+      .catch(handleServerError(true))
   }, [moviesCardList])
 
   useEffect(() => {
@@ -53,6 +60,7 @@ function SearchForm({ updateSearchList, prefix, savedCardList, setSwitchBox }) {
         : (localStorage.setItem('searchList', ([])),
           updateSearchList([]))
       setSearchInput('')
+      setDefaultCardOnPage()
     } else {
       const findFieldList = [...savedCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
       findFieldList.length !== 0
