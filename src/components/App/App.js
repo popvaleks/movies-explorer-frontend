@@ -104,10 +104,9 @@ function App() {
       setLoggedIn(true);
       uploadUserInfo();
       history.push(location.pathname)
-    } else {
-      setLoggedIn(false);
     }
   }
+
   useEffect(() => {
     handleTokenCheck();
   }, [])
@@ -174,7 +173,6 @@ function App() {
           <Header
             landingHeader={landingHeader}
             loggedIn={loggedIn}
-            signOut={signOut}
             handleTokenCheck={handleTokenCheck}
           />
           <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'

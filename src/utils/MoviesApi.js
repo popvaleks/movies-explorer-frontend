@@ -1,3 +1,5 @@
+import { BASE_URL } from './MainApi'
+
 export const getAllMovies = () => {
   return fetch(`https://api.nomoreparties.co/beatfilm-movies`, {
     method: 'GET',
@@ -11,7 +13,7 @@ export const getAllMovies = () => {
 }
 
 export const getMyMovies = () => {
-  return fetch(`http://localhost:3001/movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -25,7 +27,7 @@ export const getMyMovies = () => {
 
 export const saveMovies = (data) => {
   const defaulImg = 'https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158'
-  return fetch(`http://localhost:3001/movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -58,7 +60,7 @@ export const saveMovies = (data) => {
 }
 
 export const unsaveMovies = (id) => {
-  return fetch(`http://localhost:3001/movies/${id}`, {
+  return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     credentials: 'include',
     headers: {

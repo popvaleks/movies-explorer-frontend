@@ -7,7 +7,7 @@ import './Header.css';
 import logo from '../../images/logo.svg';
 import buttonProfileImg from '../../images/profileIco.svg';
 
-function Header({ landingHeader, loggedIn, signOut }) {
+function Header({ landingHeader, loggedIn }) {
   const [menuStatus, setMenuStatus] = useState('hidden');
   const [headerOn, setHeaderOn] = useState(true);
 
@@ -49,10 +49,6 @@ function Header({ landingHeader, loggedIn, signOut }) {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
-  const handleSignOut = () => {
-    signOut()
-  }
-
   return (
     <header className={`header ${!headerOn && 'header__hidden'}`}>
       <div className="wrapper">
@@ -72,16 +68,6 @@ function Header({ landingHeader, loggedIn, signOut }) {
               </ul>
             </nav>
           }
-          {/* {landingHeader && loggedIn &&
-            <nav className="header__nav">
-              <ul className="header__list">
-                <li className="header__item">
-                  <a href="" onClick={(e) => linkClick('/movies', e)} className="link header__link">Фильмы</a>
-                </li>
-                <button type='button' onClick={handleSignOut} className="button header__button">Выйти</button>
-              </ul>
-            </nav>
-          } */}
           {loggedIn &&
             <div className="header__menu">
               <div onClick={menuSwap} className="menu-burger__header">

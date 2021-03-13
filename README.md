@@ -2,9 +2,9 @@
 
 
 
-**Демонстрация проекта на [Яндекс.Облако](https://nomoreparties.co/beatfilm-movies)
+**Демонстрация проекта на [Яндекс.Облако](https://www.popvaleks.students.nomoreparties.xyz/) или https://www.popvaleks.students.nomoreparties.xyz/
 
-**Сервер с API расположен по адресу - https://nomoreparties.co/beatfilm-movies**
+**Сервер с API расположен по адресу - https://api.popvaleks.students.nomoreparties.xyz/** публичный ip сервера - 178.154.231.134
 
 ## :page_with_curl: Описание проекта
 

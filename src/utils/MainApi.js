@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:3001'
-//export const BASE_URL = 'https://api.popvaleks.students.nomoreparties.xyz'
+// export const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = 'https://api.popvaleks.students.nomoreparties.xyz'
 
 class ErrorApiCodeHandler extends Error {
   constructor(code = 500, message = '', ...args) {
@@ -100,12 +100,3 @@ export const signOut = () => {
     .then(res => res.json())
     .then(data => data)
 }
-// убрать
-export const getContent = (jwt) => fetch(`${BASE_URL}/users/me`, {
-  method: 'GET',
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`,
-  },
-})
