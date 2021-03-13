@@ -55,14 +55,24 @@ function Saved({
         setSavedCardList(savedCardList.filter((i) => i._id !== item._id))
         if (searchList.length !== 0) {
           setSearchList(searchList.filter((i) => i._id !== item._id))
-          if (switchBoxEnable) {
+          if (searchList.filter((i) => i._id !== item._id).length === 0) {
+            setNotFound(true)
+          }
+        }
+        if (switchBoxEnable) {
+          setShortMovesCardList(shortMovesCardList.filter((i) => i._id !== item._id))
+          if (shortMovesCardList.filter((i) => i._id !== item._id).length === 0) {
+            setNotFound(true)
+          }
+          if (shortSearchList.length !== 0) {
             setShortSearchList(shortSearchList.filter((i) => i._id !== item._id))
             if (shortSearchList.filter((i) => i._id !== item._id).length === 0) {
               setNotFound(true)
             }
           }
         }
-      })
+      }
+      )
       .catch((err) => { console.log(err) })
   }
 

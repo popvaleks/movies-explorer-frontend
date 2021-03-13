@@ -6,9 +6,8 @@ import {
 import './Header.css';
 import logo from '../../images/logo.svg';
 import buttonProfileImg from '../../images/profileIco.svg';
-import * as auth from '../../utils/MainApi';
 
-function Header({ landingHeader, loggedIn, logoUt }) {
+function Header({ landingHeader, loggedIn, signOut }) {
   const [menuStatus, setMenuStatus] = useState('hidden');
   const [headerOn, setHeaderOn] = useState(true);
 
@@ -51,10 +50,7 @@ function Header({ landingHeader, loggedIn, logoUt }) {
   }, [handleRouteCheck]);
 
   const handleSignOut = () => {
-    auth.signOut()
-      .then(logoUt())
-      .catch((err) => { console.log(err) })
-    history.push('/');
+    signOut()
   }
 
   return (

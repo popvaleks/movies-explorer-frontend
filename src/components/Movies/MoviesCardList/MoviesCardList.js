@@ -51,7 +51,7 @@ function MoviesCardList({
         </div>
         : notFound !== true
           ?
-          <Preloader></Preloader>
+          <Preloader />
           :
           <div className="movies-cardList__not-found">
             {errorServer

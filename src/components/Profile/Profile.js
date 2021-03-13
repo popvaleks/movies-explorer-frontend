@@ -4,14 +4,20 @@ import { useHistory } from 'react-router-dom';
 import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-function Profile() {
+function Profile({ signOut }) {
   const history = useHistory();
   const currentUser = useContext(CurrentUserContext)
-  const name = currentUser.name;
-  const email = currentUser.email;
   const linkClick = (path) => {
     history.push(path)
   };
+
+  const handleSignOut = () => {
+    signOut()
+  }
+
+  const name = currentUser.name
+  const email = currentUser.email
+
   return (
     <div className="profile__wrapper">
       <div className="profile__content">
@@ -27,9 +33,8 @@ function Profile() {
           </div>
         </div>
         <button onClick={() => linkClick('/edit-profile')} className="profile__button profile__edit">Редактировать</button>
-        <button className="profile__button profile__log-out">Выйти из аккаунта</button>
+        <button onClick={handleSignOut} className="profile__button profile__log-out">Выйти из аккаунта</button>
       </div>
-
     </div>
   )
 }

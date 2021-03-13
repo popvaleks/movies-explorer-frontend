@@ -10,7 +10,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function Auth({
   title, upDateUserInfo, nameField, btnText, subtitleText,
   subtitleLink, subtitleLinkRoute, setLoggedIn, passField,
-  editProfile
+  editProfile,
 }) {
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');
@@ -141,6 +141,7 @@ function Auth({
           resetForm();
           setLoggedIn(true);
           history.push('/movies');
+          upDateUserInfo();
         })
         .catch((err) => {
           setReqError(errorHandler(err.code));

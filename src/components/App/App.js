@@ -86,9 +86,17 @@ function App() {
       .catch((err) => { console.log(err) })
   }, [currentUser])
 
-  const logoUt = () => {
-    setLoggedIn(false);
+
+  const signOut = () => {
+    auth.signOut()
+      .then(() => {
+        history.push('/');
+        localStorage.removeItem('searchList')
+        setLoggedIn(false);
+      })
+      .catch((err) => { console.log(err) })
   }
+
 
   const handleTokenCheck = () => {
     const jwt = getCookie('jwt')
@@ -98,7 +106,6 @@ function App() {
       history.push(location.pathname)
     } else {
       setLoggedIn(false);
-      console.log('not logined')
     }
   }
   useEffect(() => {
@@ -160,11 +167,6 @@ function App() {
     widthChanheHaedler();
   }, [location.pathname, widthPage])
 
-  // useEffect(() => {
-  //   setDefaultCardOnPage();
-  // }, [location.pathname])
-
-
   return (
     < CurrentUserContext.Provider value={currentUser} >
       <div>
@@ -172,7 +174,7 @@ function App() {
           <Header
             landingHeader={landingHeader}
             loggedIn={loggedIn}
-            logoUt={logoUt}
+            signOut={signOut}
             handleTokenCheck={handleTokenCheck}
           />
           <div className={`${wrapperHeight === 'withOutFooterAndHeader' ? 'app__content_withOutFooterAndHeader'
@@ -199,6 +201,7 @@ function App() {
                 subtitleText='Еще не зарегестрированы'
                 subtitleLink='Регистрация'
                 subtitleLinkRoute='sign-up'
+                upDateUserInfo={upDateUserInfo}
               />
               <ProtectedRoute path="/movies" component={Movies} loggedIn={loggedIn}
                 cardOnPage={cardOnPage}
@@ -214,7 +217,8 @@ function App() {
                 errorServer={errorServer}
                 handleServerError={handleServerError}
               />
-              <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile" />
+              <ProtectedRoute loggedIn={loggedIn} component={Profile} path="/profile"
+                signOut={signOut} />
               <ProtectedRoute loggedIn={loggedIn} component={Auth} path="/edit-profile"
                 upDateUserInfo={upDateUserInfo}
                 title='Введите новые данные!'

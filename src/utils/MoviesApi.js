@@ -33,8 +33,8 @@ export const saveMovies = (data) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      nameRU: data.nameRU !== null ? data.nameRU : data.nameEN,
-      nameEN: data.nameEN === null ? data.nameRU : data.nameEN,
+      nameRU: data.nameRU || data.nameEN || 'Фильм',
+      nameEN: data.nameEN || data.nameRU || 'Film',
       country: data.country || 'world',
       director: data.director || 'director',
       duration: data.duration || 66,
