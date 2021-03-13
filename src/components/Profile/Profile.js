@@ -1,7 +1,5 @@
-import React, {useContext} from 'react';
-import {
-  useHistory, Switch, Route, useLocation,
-} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'

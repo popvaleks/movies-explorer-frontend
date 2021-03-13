@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import {
-  useHistory, Switch, Route, useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './Auth.css';
 import ico from '../../images/logo.svg';
@@ -10,7 +8,9 @@ import errorHandler from '../../helpers/errorHandler';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Auth({
-  title, upDateUserInfo, nameField, btnText, subtitleText, subtitleLink, subtitleLinkRoute, setLoggedIn, passField, editProfile
+  title, upDateUserInfo, nameField, btnText, subtitleText,
+  subtitleLink, subtitleLinkRoute, setLoggedIn, passField,
+  editProfile
 }) {
   const [nameInput, setNameInput] = useState('');
   const [emailInput, setEmailInput] = useState('');

@@ -6,12 +6,8 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import { getMyMovies, unsaveMovies } from '../../utils/MoviesApi';
 
 function Saved({
-  addCardOnScreen,
-  errorServer,
-  handleServerError,
-  cardOnPage,
-  setDefaultCardOnPage
-}) {
+  addCardOnScreen, errorServer, handleServerError,
+  cardOnPage, setDefaultCardOnPage }) {
   const [searchList, setSearchList] = useState([])
   const [savedCardList, setSavedCardList] = useState([])
   const [notFound, setNotFound] = useState(false)
@@ -27,7 +23,6 @@ function Saved({
             setNotFound(true))
           : (setSavedCardList(cards),
             setNotFound(false))
-        console.log(cards)
       })
       .catch((err) => { console.log(err) })
   }, [savedCardList])
@@ -105,25 +100,6 @@ function Saved({
       notFoundCheck()
     }
   }
-
-  // const handleSwitchBox = (arg) => {
-  //   if (arg === true) {
-  //     searchList.length !== 0
-  //       ? setShortSearchList(searchList.filter((i) => i.duration < 41))
-  //       : setShortMovesCardList(savedCardList.filter((i) => i.duration < 41))
-  //     if (searchList.length !== 0 && searchList.filter((i) => i.duration < 41).length === 0) {
-  //       setNotFound(true)
-  //     }
-  //     if (savedCardList.length !== 0 && savedCardList.filter((i) => i.duration < 41).length === 0) {
-  //       setNotFound(true)
-  //     }
-  //     setSwitchBoxEnable(true)
-  //   } else {
-  //     setShortMovesCardList([])
-  //     setShortSearchList([])
-  //     setSwitchBoxEnable(false)
-  //   }
-  // }
 
   return (
     <div className="movies__wrapper">

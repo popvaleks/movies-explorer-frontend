@@ -1,21 +1,16 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import './SearchForm.css';
-import Preloader from '../../../vendor/preloader/Preloader';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
 function SearchForm({
-  handleServerError,
-  setDefaultCardOnPage,
-  updateSearchList,
-  prefix,
-  savedCardList,
-  setSwitchBox }) {
+  handleServerError, setDefaultCardOnPage, updateSearchList,
+  prefix, savedCardList, setSwitchBox }) {
   const [checkboxOn, setCheckboxOn] = useState('')
   const [bgcToogle, setBGCToogle] = useState('')
-
   const [moviesCardList, setMoviesCardList] = useState([])
-  const [showPreload, setShowPreload] = useState(false)
+  const [searchInput, setSearchInput] = useState('');
+  const [formValid, setFormValid] = useState(false);
 
   const switchBoxHandler = () => {
     if (checkboxOn === '') {
@@ -42,8 +37,6 @@ function SearchForm({
     handleGetmoviesCard()
   }, [])
 
-  const [searchInput, setSearchInput] = useState('');
-  const [formValid, setFormValid] = useState(false);
 
   const handleSearchInputChange = (evt) => {
     setSearchInput(evt.target.value)
@@ -94,9 +87,6 @@ function SearchForm({
         </label>
         <p className="searchForm__radio-text">Короткометражки</p>
       </div>
-      {showPreload &&
-        <Preloader></Preloader>
-      }
     </div>
   );
 }

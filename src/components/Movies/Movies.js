@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import './Movies.css';
 import SearchForm from './SearchForm/SearchForm';
@@ -8,11 +8,8 @@ import { saveMovies } from '../..//utils/MoviesApi'
 import { unsaveMovies } from '../../utils/MoviesApi'
 
 function Movies({
-  addCardOnScreen,
-  errorServer,
-  handleServerError,
-  cardOnPage,
-  setDefaultCardOnPage
+  addCardOnScreen, errorServer, handleServerError,
+  cardOnPage, setDefaultCardOnPage
 }) {
   const [searchList, setSearchList] = useState([])
   const [moviesCardList, setMoviesCardList] = useState([]);

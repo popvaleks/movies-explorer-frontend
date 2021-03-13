@@ -1,15 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import {
-  useLocation,
-} from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useLocation, } from 'react-router-dom';
 
 import './MoviesCard.css';
-
 import unSaveImg from '../../../images/saveBDd.svg';
 import saveImg from '../../../images/save9BE.svg';
-import { saveMovies } from '../../../utils/MoviesApi'
-import { unsaveMovies } from '../../../utils/MoviesApi'
-
 
 function MoviesCard({ card, savedCardList, handleChangeSave }) {
   const [saved, setSaved] = useState(false);
@@ -21,7 +15,7 @@ function MoviesCard({ card, savedCardList, handleChangeSave }) {
     location.pathname === '/saved-movies' ? setShowCross(true) : setShowCross(false);
   }, [location.pathname]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
@@ -45,47 +39,16 @@ function MoviesCard({ card, savedCardList, handleChangeSave }) {
     }
   }
 
-  React.useEffect(() => {
+  const handlerIngClick = () => {
+    window.open(card.trailerLink || `https://www.youtube.com/results?search_query=${card.nameRU + ' ' + card.year}`)
+  }
+
+  useEffect(() => {
     if (location.pathname === '/movies') {
       handleSavedCheck(card);
     }
     handleSavedCheck()
   }, []);
-
-  // const switchSaveIco = () => {
-  //   saveMovies(card)
-  //   console.log(card)
-  // }
-
-  // const switchSaveIco = () => {
-  //   if (saved === true) {
-  //     savedCardList.map((item) => {
-  //       if (item.nameRU === card.nameRU) {
-  //         unsaveMovies(item._id)
-  //           .then(setSaved(false))
-  //           .catch((err) => { console.log(err) })
-  //       } else {
-  //         return
-  //       }
-  //     })
-  //   } else {
-  //     saveMovies(card)
-  //       .then(setSaved(true))
-  //       .catch((err) => { console.log(err) })
-  //   }
-  // }
-
-
-  // const handleSavedCheck = useCallback(() => {
-  //   if (savedCardList.message !== "Список фильмов отсутствует") {
-  //     function isPositive(item) {
-  //       return item.nameRU === card.nameRU;
-  //     }
-  //     savedCardList.some(isPositive)
-  //       ? setSaved(true)
-  //       : setSaved(false)
-  //   }
-  // }, [saved]);
 
   return (
     <div className="moviesCard__wrapper">
@@ -106,13 +69,13 @@ function MoviesCard({ card, savedCardList, handleChangeSave }) {
         }
       </div>
       <div className="moviesCard__img-wrapper">
-        <img alt='Фильмы' className="moviesCard__img"
+        <img onClick={handlerIngClick} alt='Фильмы' className="moviesCard__img"
           src={
             !showCross
               ? (
                 card.image !== null
-                ? `https://api.nomoreparties.co${card.image.url}`
-                : `https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158`)
+                  ? `https://api.nomoreparties.co${card.image.url}`
+                  : `https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158`)
               : card.image}>
 
         </img>

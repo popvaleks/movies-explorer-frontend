@@ -1,4 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, {
+  useCallback, useState, useEffect, useLayoutEffect
+} from 'react';
 import {
   useHistory, Switch, Route, useLocation,
 } from 'react-router-dom';
@@ -28,11 +30,13 @@ function App() {
     name: '', film: [], email: '', _id: ''
   })
   const [loggedIn, setLoggedIn] = useState(false)
+  const [cardOnPage, setCardOnPage] = useState();
+  const [errorServer, setErrorServer] = useState(false)
 
   const history = useHistory();
   const location = useLocation();
-
-  const routeList = ['/sign-in', '/sign-up', '/404', '/profile', '/saved-movies', '/movies', '/', '/edit-profile'];
+  const routeList = ['/sign-in', '/sign-up', '/404', '/profile',
+    '/saved-movies', '/movies', '/', '/edit-profile'];
 
   const handleErrorPageCheck = useCallback(() => {
     const path = location.pathname;
@@ -90,10 +94,8 @@ function App() {
     const jwt = getCookie('jwt')
     if (jwt) {
       setLoggedIn(true);
-      console.log(loggedIn)
       uploadUserInfo();
       history.push(location.pathname)
-      console.log('itsWorked')
     } else {
       setLoggedIn(false);
       console.log('not logined')
@@ -103,7 +105,41 @@ function App() {
     handleTokenCheck();
   }, [])
 
-  const [cardOnPage, setCardOnPage] = useState();
+  function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+
+    function throttle(callback, limit) {
+      let waiting = false;                      // Initially, we're not waiting
+      return function () {                      // We return a throttled function
+        if (!waiting) {                       // If we're not waiting
+          callback.apply(this, arguments);  // Execute users function
+          waiting = true;                   // Prevent future invocations
+          setTimeout(function () {          // After a period of time
+            waiting = false;              // And allow future invocations
+          }, limit);
+        }
+      }
+    }
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      const updateSizeTrottle = throttle(updateSize, 1000)
+      window.addEventListener('resize', updateSizeTrottle);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSizeTrottle);
+    }, []);
+    return size;
+  }
+
+  const [widthPage, heightPage] = useWindowSize();
+
+  const widthChanheHaedler = () => {
+    setCardOnPage(
+      widthPage < 1200 ? 8 :
+        widthPage < 765 ? 5 : 12)
+  }
+
   const { innerWidth: width, innerHeight: height } = window;
 
   const setDefaultCardOnPage = () => {
@@ -113,18 +149,20 @@ function App() {
   }
 
   const addCardOnScreen = () => {
-    setCardOnPage(cardOnPage + (window.innerWidth > 1200 ? 3 : 2))
+    setCardOnPage(cardOnPage + (widthPage > 1200 ? 3 : 2))
   }
-
-  const [errorServer, setErrorServer] = useState(false)
 
   const handleServerError = (arg) => {
     setErrorServer(arg)
   }
 
   useEffect(() => {
-    setDefaultCardOnPage();
-  }, [location.pathname])
+    widthChanheHaedler();
+  }, [location.pathname, widthPage])
+
+  // useEffect(() => {
+  //   setDefaultCardOnPage();
+  // }, [location.pathname])
 
 
   return (

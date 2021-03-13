@@ -1,12 +1,11 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
-  useHistory, Switch, Route, useLocation,
+  useHistory, useLocation,
 } from 'react-router-dom';
 
 import './Header.css';
 import logo from '../../images/logo.svg';
 import buttonProfileImg from '../../images/profileIco.svg';
-import { removeCookie } from '../../utils/cookieHandler';
 import * as auth from '../../utils/MainApi';
 
 function Header({ landingHeader, loggedIn, logoUt }) {
@@ -16,13 +15,23 @@ function Header({ landingHeader, loggedIn, logoUt }) {
   const history = useHistory();
   const location = useLocation();
 
+  const hadleMenuHiddenOnClickLink = () => {
+    if (menuStatus !== 'hidden') {
+      setMenuStatus('hidden')
+      scrollPage(false)
+    }
+  }
+
   const linkClick = (path, e) => {
     e.preventDefault();
+    hadleMenuHiddenOnClickLink()
     history.push(path)
   };
+
   const scrollPage = (condition) => {
     condition === true ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'visible'
   };
+
   const menuSwap = () => {
     menuStatus === 'hidden'
       ? (setMenuStatus(''), scrollPage(true))
@@ -42,12 +51,10 @@ function Header({ landingHeader, loggedIn, logoUt }) {
   }, [handleRouteCheck]);
 
   const handleSignOut = () => {
-    // removeCookie('jwt')
     auth.signOut()
       .then(logoUt())
       .catch((err) => { console.log(err) })
     history.push('/');
-    console.log('exit')
   }
 
   return (
