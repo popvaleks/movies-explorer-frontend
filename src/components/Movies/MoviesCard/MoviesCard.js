@@ -50,12 +50,23 @@ function MoviesCard({ card, savedCardList, handleChangeSave }) {
     handleSavedCheck()
   }, []);
 
+  const getTimeFromMins = (mins) => {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    if (hours > 0) {
+      return hours + 'ч ' + minutes + 'м';
+    } else {
+      return minutes + 'м'
+    }
+
+  };
+
   return (
     <div className="moviesCard__wrapper">
       <div className="moviesCard__header">
         <div className="moviesCard__header-info">
           <h3 className="moviesCard__header-name">{card.nameRU}</h3>
-          <p className="moviesCard__header-duration">{card.duration}</p>
+          <p className="moviesCard__header-duration">{getTimeFromMins(card.duration)}</p>
         </div>
         {!showCross &&
           <button onClick={switchSaveIco} className="moviesCard__button moviesCard__button-save">

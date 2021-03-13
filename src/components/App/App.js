@@ -192,6 +192,8 @@ function App() {
                 subtitleText='Уже зарегестрированы'
                 subtitleLink='Войти'
                 subtitleLinkRoute='sign-in'
+                upDateUserInfo={upDateUserInfo}
+                setLoggedIn={setLoggedIn}
               />
               <ProtectedRoute path="/sign-in" loggedIn={!loggedIn} component={Auth}
                 setLoggedIn={setLoggedIn}

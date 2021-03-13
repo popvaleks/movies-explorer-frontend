@@ -72,7 +72,7 @@ function Header({ landingHeader, loggedIn, signOut }) {
               </ul>
             </nav>
           }
-          {landingHeader && loggedIn &&
+          {/* {landingHeader && loggedIn &&
             <nav className="header__nav">
               <ul className="header__list">
                 <li className="header__item">
@@ -81,8 +81,8 @@ function Header({ landingHeader, loggedIn, signOut }) {
                 <button type='button' onClick={handleSignOut} className="button header__button">Выйти</button>
               </ul>
             </nav>
-          }
-          {!landingHeader &&
+          } */}
+          {loggedIn &&
             <div className="header__menu">
               <div onClick={menuSwap} className="menu-burger__header">
                 <span></span>

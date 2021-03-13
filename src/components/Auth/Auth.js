@@ -133,52 +133,64 @@ function Auth({
     history.push(path);
   };
 
+  const loginUp = (emailInput, password) => {
+    auth.authorize(emailInput, password)
+      .then((data) => {
+        resetForm();
+        setLoggedIn(true);
+        history.push('/movies');
+        upDateUserInfo();
+      })
+      .catch((err) => {
+        setReqError(errorHandler(err.code));
+        setPassword('');
+        setFormValid(false);
+        setPasswordDirty(false);
+      })
+  }
+
+  const regUpAndLogin = (emailInput, password, nameInput) => {
+    auth.register(emailInput, password, nameInput)
+      .then((data) => {
+        setPassword('');
+        setNameInput('');
+        loginUp(emailInput, password)
+      })
+      .catch((err) => {
+        setReqError(errorHandler(err.code));
+        setPassword('');
+        setFormValid(false);
+        setPasswordDirty(false);
+      })
+  }
+
+  const changeProfileInfo = (emailInput, nameInput) => {
+    auth.editProfile(emailInput, nameInput)
+      .then(() => {
+        setReqError('Сохранено!');
+        setFormValid(false);
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            resetForm();
+            upDateUserInfo();
+            history.push('/profile');
+            resolve();
+          }, 1000)
+        });
+      })
+      .catch((err) => {
+        setReqError(errorHandler(err.code));
+        setFormValid(false);
+      })
+  }
+
   const handleSubmit = (evt) => {
     evt.preventDefault()
     location.pathname === '/sign-in'
-      ? auth.authorize(emailInput, password)
-        .then((data) => {
-          resetForm();
-          setLoggedIn(true);
-          history.push('/movies');
-          upDateUserInfo();
-        })
-        .catch((err) => {
-          setReqError(errorHandler(err.code));
-          setPassword('');
-          setFormValid(false);
-          setPasswordDirty(false);
-        })
+      ? loginUp(emailInput, password)
       : location.pathname === '/edit-profile'
-        ? auth.editProfile(emailInput, nameInput)
-          .then(() => {
-            setReqError('Сохранено!');
-            setFormValid(false);
-            return new Promise(function (resolve, reject) {
-              setTimeout(() => {
-                resetForm();
-                upDateUserInfo();
-                history.push('/profile');
-                resolve();
-              }, 1000)
-            });
-          })
-          .catch((err) => {
-            setReqError(errorHandler(err.code));
-            setFormValid(false);
-          })
-        : auth.register(emailInput, password, nameInput)
-          .then((data) => {
-            setPassword('');
-            setNameInput('');
-            history.push('/sign-in');
-          })
-          .catch((err) => {
-            setReqError(errorHandler(err.code));
-            setPassword('');
-            setFormValid(false);
-            setPasswordDirty(false);
-          })
+        ? changeProfileInfo(emailInput, nameInput)
+        : regUpAndLogin(emailInput, password, nameInput)
   }
 
   return (
