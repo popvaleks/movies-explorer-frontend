@@ -1,7 +1,7 @@
 import React from 'react';
 import './AboutProject.css';
 
-function AboutProject({ id }) {
+function AboutProject({ }) {
   return (
     <div id="aboutProject" className="about-project__wrapper">
       <h2 className="about-project__tittle">О проекте</h2>

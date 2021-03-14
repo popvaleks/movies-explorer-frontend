@@ -126,6 +126,7 @@
 }
 
 .header__button-profile-wrapper {
+  margin-left: 17px;
   width: 26px;
   height: 30px;
   background-color: #313131;
@@ -138,7 +139,6 @@
 .header__button-profile-text {
   text-align: left;
   height: 30px;
-  margin: auto auto auto 0;
   font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: 500;

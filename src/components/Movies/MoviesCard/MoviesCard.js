@@ -1,15 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import {
-  useLocation,
-} from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useLocation, } from 'react-router-dom';
 
 import './MoviesCard.css';
-
 import unSaveImg from '../../../images/saveBDd.svg';
 import saveImg from '../../../images/save9BE.svg';
 
-
-function MoviesCard({ cardName, cardDuration, cardImg }) {
+function MoviesCard({ card, savedCardList, handleChangeSave }) {
   const [saved, setSaved] = useState(false);
   const [showCross, setShowCross] = useState('false');
 
@@ -19,20 +15,58 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
     location.pathname === '/saved-movies' ? setShowCross(true) : setShowCross(false);
   }, [location.pathname]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleRouteCheck();
   }, [handleRouteCheck]);
 
-  const switchSaveIco = () => saved === false ? setSaved(true) : setSaved(false);
+  const switchSaveIco = () => {
+    handleChangeSave(card, saved)
+    saved === true ? setSaved(false) : setSaved(true);
+  }
 
-  const removeCard = () => console.log('card removed')
+  const removeCard = () => {
+    handleChangeSave(card)
+  }
+
+  const handleSavedCheck = () => {
+    if (savedCardList.message !== "Список фильмов отсутствует") {
+      function isPositive(item) {
+        return item.nameRU === card.nameRU;
+      }
+      savedCardList.some(isPositive)
+        ? setSaved(true)
+        : setSaved(false)
+    }
+  }
+
+  const handlerIngClick = () => {
+    window.open(card.trailerLink || `https://www.youtube.com/results?search_query=${card.nameRU + ' ' + card.year}`)
+  }
+
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      handleSavedCheck(card);
+    }
+    handleSavedCheck()
+  }, []);
+
+  const getTimeFromMins = (mins) => {
+    let hours = Math.trunc(mins / 60);
+    let minutes = mins % 60;
+    if (hours > 0) {
+      return hours + 'ч ' + minutes + 'м';
+    } else {
+      return minutes + 'м'
+    }
+
+  };
 
   return (
     <div className="moviesCard__wrapper">
       <div className="moviesCard__header">
         <div className="moviesCard__header-info">
-          <h3 className="moviesCard__header-name">{cardName}</h3>
-          <p className="moviesCard__header-duration">{cardDuration}</p>
+          <h3 className="moviesCard__header-name">{card.nameRU}</h3>
+          <p className="moviesCard__header-duration">{getTimeFromMins(card.duration)}</p>
         </div>
         {!showCross &&
           <button onClick={switchSaveIco} className="moviesCard__button moviesCard__button-save">
@@ -46,7 +80,16 @@ function MoviesCard({ cardName, cardDuration, cardImg }) {
         }
       </div>
       <div className="moviesCard__img-wrapper">
-        <img alt='Фильмы' className="moviesCard__img" src={cardImg}></img>
+        <img onClick={handlerIngClick} alt='Фильмы' className="moviesCard__img"
+          src={
+            !showCross
+              ? (
+                card.image !== null
+                  ? `https://api.nomoreparties.co${card.image.url}`
+                  : `https://images.puella-magi.net/thumb/2/27/No_Image_Wide.svg/1600px-No_Image_Wide.svg.png?20110202071158`)
+              : card.image}>
+
+        </img>
       </div>
     </div >
   );

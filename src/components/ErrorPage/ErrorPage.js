@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  useHistory, Switch, Route, useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './ErrorPage.css'
 

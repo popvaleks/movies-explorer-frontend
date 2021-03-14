@@ -1,7 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import {
-  useHistory, Switch, Route, useLocation,
-} from 'react-router-dom';
+import React, { useState, useCallback, } from 'react';
+import { useLocation, } from 'react-router-dom';
 
 import './Footer.css';
 
