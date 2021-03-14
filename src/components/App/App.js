@@ -20,6 +20,8 @@ import ProtectedRoute from './ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import { getCookie } from '../../utils/cookieHandler'
 import * as auth from '../../utils/MainApi';
+import { getAllMovies } from '../../utils/MoviesApi'
+import { numberCardOnPage, numberAddCardOnPage } from '../../utils/constants'
 
 const log = false;
 
@@ -32,6 +34,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [cardOnPage, setCardOnPage] = useState();
   const [errorServer, setErrorServer] = useState(false)
+  const [moviesCardList, setMoviesCardList] = useState([])
 
   const history = useHistory();
   const location = useLocation();
@@ -41,7 +44,7 @@ function App() {
   const handleErrorPageCheck = useCallback(() => {
     const path = location.pathname;
     if (routeList.includes(path, 0) !== true) {
-      return history.push('/404')
+      setTimeout(() => history.push('/404'))
     } else {
       return
     }
@@ -107,10 +110,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    handleTokenCheck();
-  }, [])
-
   function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
 
@@ -142,20 +141,20 @@ function App() {
 
   const widthChanheHaedler = () => {
     setCardOnPage(
-      widthPage < 1200 ? 8 :
-        widthPage < 765 ? 5 : 12)
+      widthPage > 1200 ? numberCardOnPage.XL :
+        widthPage > 765 ? numberCardOnPage.L : numberCardOnPage.M)
   }
 
   const { innerWidth: width, innerHeight: height } = window;
 
   const setDefaultCardOnPage = () => {
     setCardOnPage(
-      window.innerWidth > 1200 ? 12 :
-        window.innerWidth > 765 ? 8 : 5)
+      window.innerWidth > 1200 ? numberCardOnPage.XL :
+        window.innerWidth > 765 ? numberCardOnPage.L : numberCardOnPage.M)
   }
 
   const addCardOnScreen = () => {
-    setCardOnPage(cardOnPage + (widthPage > 1200 ? 3 : 2))
+    setCardOnPage(cardOnPage + (widthPage > 1200 ? numberAddCardOnPage.XL : numberAddCardOnPage.L))
   }
 
   const handleServerError = (arg) => {
@@ -165,6 +164,25 @@ function App() {
   useEffect(() => {
     widthChanheHaedler();
   }, [location.pathname, widthPage])
+
+  const handleGetmoviesCard = useCallback(() => {
+    getAllMovies()
+      .then((cards) => {
+        setMoviesCardList(cards)
+        handleServerError(false)
+      })
+      .catch((err) => {
+        if (err) {
+          handleServerError(true)
+          debugger
+        }
+      })
+  }, [moviesCardList])
+
+  useEffect(() => {
+    handleGetmoviesCard()
+    handleTokenCheck();
+  }, [])
 
   return (
     < CurrentUserContext.Provider value={currentUser} >
@@ -179,6 +197,9 @@ function App() {
             : wrapperHeight === 'withOutFooter' ? 'app__content_withOutFooter'
               : 'app__content'}`}>
             <Switch>
+              <Route path="/404">
+                <ErrorPage />
+              </Route>
               <Route exact path="/">
                 <Main />
               </Route>
@@ -209,6 +230,7 @@ function App() {
                 setDefaultCardOnPage={setDefaultCardOnPage}
                 errorServer={errorServer}
                 handleServerError={handleServerError}
+                apiMoviesCardList={moviesCardList}
               />
               <ProtectedRoute path="/saved-movies" component={Saved} loggedIn={loggedIn}
                 cardOnPage={cardOnPage}
@@ -228,9 +250,6 @@ function App() {
                 subtitleText='Передумали?'
                 subtitleLink='Назад'
                 subtitleLinkRoute='/profile' />
-              <Route path="/404">
-                <ErrorPage />
-              </Route>
             </Switch>
           </div>
           <Footer />

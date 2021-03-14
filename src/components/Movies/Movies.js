@@ -9,7 +9,7 @@ import { unsaveMovies } from '../../utils/MoviesApi'
 
 function Movies({
   addCardOnScreen, errorServer, handleServerError,
-  cardOnPage, setDefaultCardOnPage
+  cardOnPage, setDefaultCardOnPage, apiMoviesCardList
 }) {
   const [searchList, setSearchList] = useState([])
   const [moviesCardList, setMoviesCardList] = useState([]);
@@ -92,6 +92,7 @@ function Movies({
         setSwitchBox={handleSwitchBox}
         setDefaultCardOnPage={setDefaultCardOnPage}
         handleServerError={handleServerError}
+        apiMoviesCardList={apiMoviesCardList}
       />
       {savedCardList.length !== 0 &&
         <MoviesCardList

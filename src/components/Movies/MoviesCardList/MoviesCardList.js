@@ -63,5 +63,4 @@ function MoviesCardList({
     </div>
   );
 }
-
 export default MoviesCardList;

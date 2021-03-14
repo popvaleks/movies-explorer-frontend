@@ -4,13 +4,13 @@ import './SearchForm.css';
 import { getAllMovies } from '../../../utils/MoviesApi'
 
 function SearchForm({
-  handleServerError, setDefaultCardOnPage, updateSearchList,
-  prefix, savedCardList, setSwitchBox }) {
+  setDefaultCardOnPage, updateSearchList,
+  prefix, savedCardList, setSwitchBox, apiMoviesCardList }) {
   const [checkboxOn, setCheckboxOn] = useState('')
   const [bgcToogle, setBGCToogle] = useState('')
-  const [moviesCardList, setMoviesCardList] = useState([])
   const [searchInput, setSearchInput] = useState('');
   const [formValid, setFormValid] = useState(false);
+  const [blockSearch, setBlockSearch] = useState(true)
 
   const switchBoxHandler = () => {
     if (checkboxOn === '') {
@@ -24,27 +24,21 @@ function SearchForm({
     };
   }
 
-  const handleGetmoviesCard = useCallback(() => {
-    getAllMovies()
-      .then((cards) => {
-        setMoviesCardList(cards)
-        handleServerError(false)
-      })
-      .catch(handleServerError(true))
-  }, [moviesCardList])
-
-  useEffect(() => {
-    handleGetmoviesCard()
-  }, [])
-
+  const moviesCardList = apiMoviesCardList
 
   const handleSearchInputChange = (evt) => {
     setSearchInput(evt.target.value)
   }
 
+  const handlerBlockSearch = (arg) => {
+    setBlockSearch(arg)
+    setFormValid(arg)
+  }
+
   const findByName = (evt) => {
     evt.preventDefault()
     const name = searchInput.toLowerCase()
+    handlerBlockSearch(false)
     if (prefix) {
       const findFieldList = [...moviesCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
       findFieldList.length !== 0
@@ -54,12 +48,14 @@ function SearchForm({
           updateSearchList([]))
       setSearchInput('')
       setDefaultCardOnPage()
+      handlerBlockSearch(true)
     } else {
       const findFieldList = [...savedCardList.entries()].filter(i => i[1].nameRU.toLowerCase().includes(name) === true).map(i => i[1])
       findFieldList.length !== 0
         ? updateSearchList(findFieldList)
         : updateSearchList('notFound')
       setSearchInput('')
+      handlerBlockSearch(true)
     }
   }
 
@@ -74,7 +70,7 @@ function SearchForm({
       <div className="searchForm__bar">
         <form onSubmit={findByName} className="searchForm__form">
           <div className="search__forn-ico"></div>
-          <input onChange={handleSearchInputChange} value={searchInput}
+          <input onChange={blockSearch && handleSearchInputChange} value={searchInput}
             name="search" placeholder="Фильм" type="search" className="searchForm__form-input"></input>
           <button onSubmit={findByName} type="submit" disabled={!formValid}
             className={`searchForm__button ${!formValid && 'searchForm__button_invalid'}`}>Найти</button>
