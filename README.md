@@ -1,11 +1,5 @@
 # Проект Movies-Frontend
 
-
-
-**Демонстрация проекта на [Яндекс.Облако](https://www.popvaleks.students.nomoreparties.xyz/) или https://www.popvaleks.students.nomoreparties.xyz/
-
-**Сервер с API расположен по адресу - https://api.popvaleks.students.nomoreparties.xyz/** публичный ip сервера - 178.154.231.134
-
 ## :page_with_curl: Описание проекта
 
 Финальная работа по проекту `Movies`. Внутри этого репозитория присутствует только front-end часть проекта
