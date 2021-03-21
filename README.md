@@ -30,3 +30,4 @@
 - Webpack
 - HTML
 - CSS
+![movies](https://4.downloader.disk.yandex.ru/preview/cd776075e0c05a2add99ab88c8b3385af99035a718c55ad9a4b1605cfb3caad1/inf/sS-PIrXsLdsTPc36ZYWhPcTOvwtpJqf72yd0Srl0d_Kw3keKptnV262Fdbv8ja_rDESWrNARdszMpwn3IhLeUg%3D%3D?uid=108914749&filename=%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA3.JPG&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=108914749&tknv=v2&size=1903x937 "Диплом")​
