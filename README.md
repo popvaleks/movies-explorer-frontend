@@ -30,4 +30,7 @@
 - Webpack
 - HTML
 - CSS
-![movies](movies-explorer-frontend/Снимок3.JPG "Диплом")​
+
+##
+
+[movies](https://github.com/popvaleks/movies-explorer-frontend/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA3.JPG "Диплом")​
