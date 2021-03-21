@@ -30,4 +30,4 @@
 - Webpack
 - HTML
 - CSS
-![movies](/снимок3.JPG "Диплом")​
+![movies](movies-explorer-frontend/Снимок3.JPG "Диплом")​
