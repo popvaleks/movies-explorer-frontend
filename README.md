@@ -19,6 +19,7 @@
 2. Для локального запуска базы данных используйте - `mongod`
 3. Для запуска API в режиме разработчика используйте - `npm run dev`
 4. Для локального запуска API воспользуйтесь - `npm run start`
+5. Установите бэкенд https://github.com/popvaleks/movies-explorer-api
 
 ## :bookmark_tabs: Стек
 
